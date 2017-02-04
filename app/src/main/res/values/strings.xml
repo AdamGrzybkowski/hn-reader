@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">HNReader</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="new_posts">new</string>
+    <string name="comments">comments</string>
+    <string name="ask">ask</string>
+    <string name="show">show</string>
 </resources>
