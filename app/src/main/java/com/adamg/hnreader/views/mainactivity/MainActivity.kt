@@ -11,10 +11,10 @@ import android.support.v7.widget.Toolbar
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.adamg.hnreader.R
-import com.adamg.hnreader.views.ShowsFragments
+import com.adamg.hnreader.views.shows.ShowsFragments
 import com.adamg.hnreader.views.asks.AsksFragments
 import com.adamg.hnreader.views.comments.CommentsFragment
-import com.adamg.hnreader.views.newposts.NewPostsFragment
+import com.adamg.hnreader.views.newstories.NewStoriesFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupViewPager(viewPager: ViewPager) {
         var adapter = ViewPagerAdapter(supportFragmentManager)
-        adapter.addFragment(NewPostsFragment(), "new")
+        adapter.addFragment(NewStoriesFragment(), "new")
         adapter.addFragment(CommentsFragment(), "comments")
         adapter.addFragment(ShowsFragments(), "show")
         adapter.addFragment(AsksFragments(), "ask")

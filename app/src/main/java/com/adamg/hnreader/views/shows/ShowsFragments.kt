@@ -1,4 +1,4 @@
-package com.adamg.hnreader.views
+package com.adamg.hnreader.views.shows
 
 
 import android.os.Bundle
