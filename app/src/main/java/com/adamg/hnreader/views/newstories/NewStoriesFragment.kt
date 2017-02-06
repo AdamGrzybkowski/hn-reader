@@ -12,11 +12,12 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.adamg.hnreader.R
+import com.adamg.hnreader.models.Story
 import com.hannesdorfmann.mosby.mvp.viewstate.lce.LceViewState
 import com.hannesdorfmann.mosby.mvp.viewstate.lce.MvpLceViewStateFragment
 import com.hannesdorfmann.mosby.mvp.viewstate.lce.data.RetainingLceViewState
 
-class NewStoriesFragment : MvpLceViewStateFragment<SwipeRefreshLayout, List<Int>, NewStoriesView, NewStoriesPresenter>(), NewStoriesView, SwipeRefreshLayout.OnRefreshListener {
+class NewStoriesFragment : MvpLceViewStateFragment<SwipeRefreshLayout, List<Story>, NewStoriesView, NewStoriesPresenter>(), NewStoriesView, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.recycleView)
     lateinit var recycleView: RecyclerView
@@ -58,7 +59,7 @@ class NewStoriesFragment : MvpLceViewStateFragment<SwipeRefreshLayout, List<Int>
         loadData(true)
     }
 
-    override fun createViewState(): LceViewState<List<Int>, NewStoriesView> {
+    override fun createViewState(): LceViewState<List<Story>, NewStoriesView> {
         return RetainingLceViewState()
     }
 
@@ -75,9 +76,9 @@ class NewStoriesFragment : MvpLceViewStateFragment<SwipeRefreshLayout, List<Int>
         swipeRefreshLayout.isRefreshing = pullToRefresh
     }
 
-    override fun setData(stories: List<Int>?) {
+    override fun setData(stories: List<Story>?) {
         stories?.let {
-            adapter?.items = stories
+            adapter?.stories = stories
             adapter?.notifyDataSetChanged()
             swipeRefreshLayout.isRefreshing = false
         }
@@ -88,8 +89,8 @@ class NewStoriesFragment : MvpLceViewStateFragment<SwipeRefreshLayout, List<Int>
         swipeRefreshLayout.isRefreshing = pullToRefresh
     }
 
-    override fun getData(): List<Int>? {
-        return adapter?.items
+    override fun getData(): List<Story>? {
+        return adapter?.stories
     }
 
     override fun getErrorMessage(e: Throwable?, pullToRefresh: Boolean): String? {

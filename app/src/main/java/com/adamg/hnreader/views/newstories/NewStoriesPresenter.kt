@@ -5,7 +5,6 @@ import com.hannesdorfmann.mosby.mvp.MvpBasePresenter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
-import java.util.concurrent.TimeUnit
 
 class NewStoriesPresenter : MvpBasePresenter<NewStoriesView>() {
 
@@ -14,7 +13,7 @@ class NewStoriesPresenter : MvpBasePresenter<NewStoriesView>() {
 
     fun loadNewStories(pullToRefresh: Boolean){
         view?.showLoading(true)
-        var subscribtion = hackerNewsApi.getNewStories()
+        var subscribtion = hackerNewsApi.getNewStories(1)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
