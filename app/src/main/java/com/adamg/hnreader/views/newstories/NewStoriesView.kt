@@ -1,6 +1,8 @@
 package com.adamg.hnreader.views.newstories
 
-import com.adamg.hnreader.models.Story
-import com.hannesdorfmann.mosby.mvp.lce.MvpLceView
+import com.hannesdorfmann.mosby.mvp.MvpView
 
-interface NewStoriesView : MvpLceView<List<Story>>
+interface NewStoriesView : MvpView{
+
+    fun render(viewState: NewStoriesModel)
+}

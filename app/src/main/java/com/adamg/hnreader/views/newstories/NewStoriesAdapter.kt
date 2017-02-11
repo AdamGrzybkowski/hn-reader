@@ -4,11 +4,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.adamg.hnreader.R
 import com.adamg.hnreader.models.Story
+import kotlinx.android.synthetic.main.item_card.view.*
 
 class NewStoriesAdapter(var stories: List<Story>): RecyclerView.Adapter<NewStoriesAdapter.NewItemsViewHolder>() {
 
@@ -19,38 +17,20 @@ class NewStoriesAdapter(var stories: List<Story>): RecyclerView.Adapter<NewStori
 
     override fun onBindViewHolder(holder: NewItemsViewHolder, position: Int) {
         val story = stories[position]
-        holder.storyNumber.text = (position+1).toString() + "."
-        holder.storyTitle.text = story.title
-        holder.storyBy.text = story.user
-        holder.storyPoints.text = story.points.toString()
-        holder.storyTime.text = story.timeAgo
-        holder.commentsCount.text = story.commentsCount.toString()
+        holder.bindStory(story)
     }
 
     override fun getItemCount() = stories.size
 
     class NewItemsViewHolder(val view: View): RecyclerView.ViewHolder(view) {
 
-        @BindView(R.id.storyTittle)
-        lateinit var storyTitle: TextView
-
-        @BindView(R.id.storyBy)
-        lateinit var storyBy: TextView
-
-        @BindView(R.id.storyNumber)
-        lateinit var storyNumber: TextView
-
-        @BindView(R.id.storyPoints)
-        lateinit var storyPoints: TextView
-
-        @BindView(R.id.storyTime)
-        lateinit var storyTime: TextView
-
-        @BindView(R.id.commentsCount)
-        lateinit var commentsCount: TextView
-
-        init {
-            ButterKnife.bind(this, view)
+        fun bindStory(story: Story){
+            view.storyNumber.text = (adapterPosition+1).toString() + "."
+            view.storyTitle.text = story.title
+            view.storyBy.text = story.user
+            view.storyPoints.text = story.points.toString()
+            view.storyTime.text = story.timeAgo
+            view.commentsCount.text = story.commentsCount.toString()
         }
     }
 

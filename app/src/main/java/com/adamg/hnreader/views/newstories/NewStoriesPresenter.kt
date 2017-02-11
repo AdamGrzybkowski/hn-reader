@@ -1,27 +1,35 @@
 package com.adamg.hnreader.views.newstories
 
-import com.adamg.hnreader.networking.HackerNewsApi
+import com.adamg.hnreader.api.HackerNewsApi
+import com.adamg.hnreader.models.Story
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class NewStoriesPresenter : MvpBasePresenter<NewStoriesView>() {
+class NewStoriesPresenter @Inject constructor(private val hackerNewsApi: HackerNewsApi) : MvpBasePresenter<NewStoriesView>() {
 
-    private val hackerNewsApi: HackerNewsApi = HackerNewsApi.create()
     private var compositeSubscription: CompositeSubscription? = null
 
     fun loadNewStories(pullToRefresh: Boolean){
-        view?.showLoading(true)
+        view?.render(NewStoriesModel.Loading())
         var subscribtion = hackerNewsApi.getNewStories(1)
+                .delay(2, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        { stories ->
-                            view?.setData(stories)
+                        { stories: List<Story> ->
+                            if (stories.isEmpty()) {
+                                view?.render(NewStoriesModel.EmptyResult())
+                            } else {
+                                view?.render(NewStoriesModel.Result(stories))
+                            }
                         },
-                        { error ->
-                            view?.showError(error, pullToRefresh)}
+                        { error: Throwable -> error.message?.let{
+                            view?.render(NewStoriesModel.Error(it)) }
+                        }
                         )
 
         compositeSubscription?.add(subscribtion)

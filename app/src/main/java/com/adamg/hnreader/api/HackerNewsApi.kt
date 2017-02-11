@@ -1,4 +1,4 @@
-package com.adamg.hnreader.networking
+package com.adamg.hnreader.api
 
 import com.adamg.hnreader.models.Story
 import retrofit2.Retrofit
@@ -16,17 +16,5 @@ interface HackerNewsApi {
 
     @GET("item/{itemId}")
     fun getItem(@Path("itemId") itemId: String)
-
-    companion object {
-        fun create() :HackerNewsApi {
-            val retrofit  = Retrofit.Builder()
-                    .baseUrl("http://node-hnapi.herokuapp.com/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                    .build()
-
-            return retrofit.create(HackerNewsApi::class.java)
-        }
-    }
 
 }
