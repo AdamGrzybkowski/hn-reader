@@ -6,7 +6,6 @@ import com.hannesdorfmann.mosby.mvp.MvpBasePresenter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class NewStoriesPresenter @Inject constructor(private val hackerNewsApi: HackerNewsApi) : MvpBasePresenter<NewStoriesView>() {
@@ -16,7 +15,6 @@ class NewStoriesPresenter @Inject constructor(private val hackerNewsApi: HackerN
     fun loadNewStories(pullToRefresh: Boolean){
         view?.render(NewStoriesModel.Loading())
         var subscribtion = hackerNewsApi.getNewStories(1)
-                .delay(2, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
