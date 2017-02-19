@@ -10,15 +10,15 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.adamg.hnreader.HNApp
 import com.adamg.hnreader.R
+import com.adamg.hnreader.adapter.NewStoriesAdapter
+import com.adamg.hnreader.base.BaseFragmentMvp
 import com.adamg.hnreader.dagger.component.DaggerNewStoriesComponent
 import com.adamg.hnreader.dagger.component.NewStoriesComponent
 import com.adamg.hnreader.models.Story
 import com.evernote.android.state.State
-import com.evernote.android.state.StateSaver
-import com.hannesdorfmann.mosby.mvp.MvpFragment
 import kotlinx.android.synthetic.main.fragment_new_stories.*
 
-class NewStoriesFragment : MvpFragment<NewStoriesView, NewStoriesPresenter>(), NewStoriesView, SwipeRefreshLayout.OnRefreshListener {
+class NewStoriesFragment : BaseFragmentMvp<NewStoriesView, NewStoriesPresenter>(), NewStoriesView, SwipeRefreshLayout.OnRefreshListener {
 
     lateinit private var newStoriesComponent: NewStoriesComponent
     lateinit private var adapter: NewStoriesAdapter
@@ -28,14 +28,7 @@ class NewStoriesFragment : MvpFragment<NewStoriesView, NewStoriesPresenter>(), N
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        StateSaver.restoreInstanceState(this, savedInstanceState)
-        injectDependencies()
         retainInstance = true
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        StateSaver.saveInstanceState(this, outState)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -46,7 +39,7 @@ class NewStoriesFragment : MvpFragment<NewStoriesView, NewStoriesPresenter>(), N
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         contentView.setOnRefreshListener(this)
-        adapter = NewStoriesAdapter(listOf())
+        adapter = NewStoriesAdapter(activity, listOf())
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(context)
         if (state is NewStoriesModel.Loading) {
@@ -105,7 +98,7 @@ class NewStoriesFragment : MvpFragment<NewStoriesView, NewStoriesPresenter>(), N
         adapter.notifyDataSetChanged()
     }
 
-    fun injectDependencies(){
+    override fun injectDependencies(){
         newStoriesComponent = DaggerNewStoriesComponent.builder()
                 .applicationComponent(HNApp.applicationComponent)
                 .build()

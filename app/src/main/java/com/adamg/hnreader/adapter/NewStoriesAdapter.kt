@@ -1,17 +1,21 @@
-package com.adamg.hnreader.views.newstories
+package com.adamg.hnreader.adapter
 
+import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.adamg.hnreader.AppConstants
 import com.adamg.hnreader.R
 import com.adamg.hnreader.models.Story
-import kotlinx.android.synthetic.main.item_card.view.*
+import com.adamg.hnreader.views.storyview.StoryActivity
+import kotlinx.android.synthetic.main.story_card.view.*
 
-class NewStoriesAdapter(var stories: List<Story>): RecyclerView.Adapter<NewStoriesAdapter.NewItemsViewHolder>() {
+class NewStoriesAdapter(var context: Context, var stories: List<Story>): RecyclerView.Adapter<NewStoriesAdapter.NewItemsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): NewItemsViewHolder {
-        val view = LayoutInflater.from(parent?.context).inflate(R.layout.item_card, parent, false)
+        val view = LayoutInflater.from(parent?.context).inflate(R.layout.story_card, parent, false)
         return NewItemsViewHolder(view)
     }
 
@@ -22,8 +26,7 @@ class NewStoriesAdapter(var stories: List<Story>): RecyclerView.Adapter<NewStori
 
     override fun getItemCount() = stories.size
 
-    class NewItemsViewHolder(val view: View): RecyclerView.ViewHolder(view) {
-
+    inner class NewItemsViewHolder(val view: View): RecyclerView.ViewHolder(view), View.OnClickListener {
         fun bindStory(story: Story){
             view.storyNumber.text = (adapterPosition+1).toString() + "."
             view.storyTitle.text = story.title
@@ -31,6 +34,13 @@ class NewStoriesAdapter(var stories: List<Story>): RecyclerView.Adapter<NewStori
             view.storyPoints.text = story.points.toString()
             view.storyTime.text = story.timeAgo
             view.commentsCount.text = story.commentsCount.toString()
+            view.setOnClickListener(this)
+        }
+
+        override fun onClick(view: View?) {
+            var intent = Intent(context, StoryActivity::class.java)
+            intent.putExtra(AppConstants.STORY, stories[adapterPosition])
+            context.startActivity(intent)
         }
     }
 

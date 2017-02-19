@@ -1,16 +1,13 @@
 package com.adamg.hnreader.views.newstories
 
 import com.adamg.hnreader.api.HackerNewsApi
+import com.adamg.hnreader.base.BasePresenter
 import com.adamg.hnreader.models.Story
-import com.hannesdorfmann.mosby.mvp.MvpBasePresenter
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import rx.subscriptions.CompositeSubscription
 import javax.inject.Inject
 
-class NewStoriesPresenter @Inject constructor(private val hackerNewsApi: HackerNewsApi) : MvpBasePresenter<NewStoriesView>() {
-
-    private var compositeSubscription: CompositeSubscription? = null
+class NewStoriesPresenter @Inject constructor(private val hackerNewsApi: HackerNewsApi) : BasePresenter<NewStoriesView>() {
 
     fun loadNewStories(pullToRefresh: Boolean){
         view?.render(NewStoriesModel.Loading())
@@ -33,14 +30,4 @@ class NewStoriesPresenter @Inject constructor(private val hackerNewsApi: HackerN
         compositeSubscription?.add(subscribtion)
     }
 
-    override fun detachView(retainInstance: Boolean) {
-        super.detachView(retainInstance)
-        compositeSubscription?.unsubscribe()
-    }
-
-    override fun attachView(view: NewStoriesView?) {
-        super.attachView(view)
-        compositeSubscription = CompositeSubscription()
-
-    }
 }
