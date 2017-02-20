@@ -1,6 +1,6 @@
 package com.adamg.hnreader.api
 
-import com.adamg.hnreader.models.Story
+import com.adamg.hnreader.models.Item
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -12,9 +12,9 @@ import rx.Observable
 interface HackerNewsApi {
 
     @GET("news")
-    fun getNewStories(@Query("page") page: Int): Observable<List<Story>>
+    fun getNewStories(@Query("page") page: Int): Observable<List<Item>>
 
     @GET("item/{itemId}")
-    fun getItem(@Path("itemId") itemId: Long): Observable<Story>
+    fun getItem(@Path("itemId") itemId: Long): Observable<Item>
 
 }

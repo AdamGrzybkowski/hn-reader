@@ -14,7 +14,7 @@ import com.adamg.hnreader.adapter.NewStoriesAdapter
 import com.adamg.hnreader.base.BaseFragmentMvp
 import com.adamg.hnreader.dagger.component.DaggerNewStoriesComponent
 import com.adamg.hnreader.dagger.component.NewStoriesComponent
-import com.adamg.hnreader.models.Story
+import com.adamg.hnreader.models.Item
 import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.fragment_new_stories.*
 
@@ -48,6 +48,7 @@ class NewStoriesFragment : BaseFragmentMvp<NewStoriesView, NewStoriesPresenter>(
             render(state)
         }
     }
+
     override fun onRefresh() {
         loadData(true)
     }
@@ -66,13 +67,13 @@ class NewStoriesFragment : BaseFragmentMvp<NewStoriesView, NewStoriesPresenter>(
             is NewStoriesModel.EmptyResult -> showEmptyResultState()
             is NewStoriesModel.Error -> showErrorState(viewState.error)
             is NewStoriesModel.Loading -> showLoadingState()
-            is NewStoriesModel.Result -> showData(viewState.stories)
+            is NewStoriesModel.Result -> showResultState(viewState.stories)
         }
     }
 
     private fun showEmptyResultState() {
         errorView.visibility = VISIBLE
-        errorView.text = "No results"
+        errorView.text = getString(R.string.no_results_message)
         contentView.isRefreshing = false
         recycleView.visibility = GONE
     }
@@ -90,7 +91,7 @@ class NewStoriesFragment : BaseFragmentMvp<NewStoriesView, NewStoriesPresenter>(
         recycleView.visibility = GONE
     }
 
-    fun showData(stories: List<Story>){
+    fun showResultState(stories: List<Item>){
         contentView.isRefreshing = false
         errorView.visibility = GONE
         recycleView.visibility = VISIBLE

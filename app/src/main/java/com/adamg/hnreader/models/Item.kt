@@ -3,10 +3,9 @@ package com.adamg.hnreader.models
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import org.w3c.dom.Comment
 import java.util.*
 
-data class Story(
+data class Item(
         val id: Long,
         val title: String,
         val points: Int,
@@ -19,9 +18,9 @@ data class Story(
         val domain: String,
         val comments: List<Comment>): Parcelable{
     companion object {
-        @JvmField val CREATOR: Parcelable.Creator<Story> = object : Parcelable.Creator<Story> {
-            override fun createFromParcel(source: Parcel): Story = Story(source)
-            override fun newArray(size: Int): Array<Story?> = arrayOfNulls(size)
+        @JvmField val CREATOR: Parcelable.Creator<Item> = object : Parcelable.Creator<Item> {
+            override fun createFromParcel(source: Parcel): Item = Item(source)
+            override fun newArray(size: Int): Array<Item?> = arrayOfNulls(size)
         }
     }
 
@@ -49,8 +48,8 @@ enum class Type {
     JOB,
     @SerializedName("story")
     STORY,
-    @SerializedName("comment")
-    COMMENT,
+    @SerializedName("ask")
+    ASK,
     @SerializedName("link")
     LINK
 }

@@ -8,11 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.adamg.hnreader.AppConstants
 import com.adamg.hnreader.R
-import com.adamg.hnreader.models.Story
+import com.adamg.hnreader.models.Item
+import com.adamg.hnreader.models.Type
 import com.adamg.hnreader.views.storyview.StoryActivity
 import kotlinx.android.synthetic.main.story_card.view.*
 
-class NewStoriesAdapter(var context: Context, var stories: List<Story>): RecyclerView.Adapter<NewStoriesAdapter.NewItemsViewHolder>() {
+class NewStoriesAdapter(var context: Context, var stories: List<Item>): RecyclerView.Adapter<NewStoriesAdapter.NewItemsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): NewItemsViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.story_card, parent, false)
@@ -27,7 +28,7 @@ class NewStoriesAdapter(var context: Context, var stories: List<Story>): Recycle
     override fun getItemCount() = stories.size
 
     inner class NewItemsViewHolder(val view: View): RecyclerView.ViewHolder(view), View.OnClickListener {
-        fun bindStory(story: Story){
+        fun bindStory(story: Item){
             view.storyNumber.text = (adapterPosition+1).toString() + "."
             view.storyTitle.text = story.title
             view.storyBy.text = story.user
@@ -38,9 +39,12 @@ class NewStoriesAdapter(var context: Context, var stories: List<Story>): Recycle
         }
 
         override fun onClick(view: View?) {
-            var intent = Intent(context, StoryActivity::class.java)
-            intent.putExtra(AppConstants.STORY, stories[adapterPosition])
-            context.startActivity(intent)
+            val story = stories[adapterPosition]
+            if (story.type == Type.LINK) {
+                var intent = Intent(context, StoryActivity::class.java)
+                intent.putExtra(AppConstants.ITEM, story)
+                context.startActivity(intent)
+            }
         }
     }
 

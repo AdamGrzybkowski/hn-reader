@@ -2,7 +2,7 @@ package com.adamg.hnreader.views.newstories
 
 import com.adamg.hnreader.api.HackerNewsApi
 import com.adamg.hnreader.base.BasePresenter
-import com.adamg.hnreader.models.Story
+import com.adamg.hnreader.models.Item
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import javax.inject.Inject
@@ -11,11 +11,11 @@ class NewStoriesPresenter @Inject constructor(private val hackerNewsApi: HackerN
 
     fun loadNewStories(pullToRefresh: Boolean){
         view?.render(NewStoriesModel.Loading())
-        var subscribtion = hackerNewsApi.getNewStories(1)
+        val subscription = hackerNewsApi.getNewStories(1)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        { stories: List<Story> ->
+                        { stories: List<Item> ->
                             if (stories.isEmpty()) {
                                 view?.render(NewStoriesModel.EmptyResult())
                             } else {
@@ -25,9 +25,9 @@ class NewStoriesPresenter @Inject constructor(private val hackerNewsApi: HackerN
                         { error: Throwable -> error.message?.let{
                             view?.render(NewStoriesModel.Error(it)) }
                         }
-                        )
+                )
 
-        compositeSubscription?.add(subscribtion)
+        compositeSubscription?.add(subscription)
     }
 
 }
