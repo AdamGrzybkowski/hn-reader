@@ -2,6 +2,7 @@ package com.adamg.hnreader.views.comments
 
 import com.adamg.hnreader.api.HackerNewsApi
 import com.adamg.hnreader.base.BasePresenter
+import com.adamg.hnreader.models.Comment
 import com.adamg.hnreader.models.Item
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -19,7 +20,7 @@ class CommentsPresenter @Inject constructor(val hackerNewsApi: HackerNewsApi): B
                             if (item.comments.isEmpty()) {
                                 view?.render(CommentsModel.EmptyResult())
                             } else {
-                                view?.render(CommentsModel.Result(item.comments))
+                                view?.render(CommentsModel.Result(getAllComments(item.comments)))
                             }
                         },
                         { error: Throwable -> error.message?.let{
@@ -27,5 +28,16 @@ class CommentsPresenter @Inject constructor(val hackerNewsApi: HackerNewsApi): B
                         }
                 )
         compositeSubscription?.add(subscription)
+    }
+
+    private fun getAllComments(comments: List<Comment>): List<Comment>{
+        var commentList: MutableList<Comment> = mutableListOf()
+        comments.forEach {
+            commentList.add(it)
+            if (it.comments.isNotEmpty()) {
+                commentList.addAll(getAllComments(it.comments))
+            }
+        }
+        return commentList
     }
 }
