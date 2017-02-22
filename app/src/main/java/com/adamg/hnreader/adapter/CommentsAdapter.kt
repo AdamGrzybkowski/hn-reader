@@ -6,12 +6,15 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import com.adamg.hnreader.R
 import com.adamg.hnreader.models.Comment
 import kotlinx.android.synthetic.main.comment_card.view.*
 
 
 class CommentsAdapter(var context: Activity, var comments: List<Comment>): RecyclerView.Adapter<CommentsAdapter.CommentViewHolder>() {
+
+    private var leftMargin = -1
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): CommentViewHolder{
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.comment_card, parent, false)
@@ -30,9 +33,15 @@ class CommentsAdapter(var context: Activity, var comments: List<Comment>): Recyc
             view.commentAuthor.text = comment.user
             view.commentAgo.text = comment.time_ago
             view.commentContent.text = comment.content
+            val layoutParams = view.cardView.layoutParams as FrameLayout.LayoutParams
+            if (leftMargin == -1) {
+                leftMargin = layoutParams.leftMargin
+            }
             if (comment.level != 0) {
-                val layoutParams = view.cardView.layoutParams
-                layoutParams.width = calculateWidth(comment.level)
+                layoutParams.leftMargin = calculateWidth(comment.level)
+                view.cardView.layoutParams = layoutParams
+            } else {
+                layoutParams.leftMargin = leftMargin
                 view.cardView.layoutParams = layoutParams
             }
         }
@@ -43,7 +52,7 @@ class CommentsAdapter(var context: Activity, var comments: List<Comment>): Recyc
             display.getSize(point)
             val width = point.x
 
-            return width - (width/20) * level - 8
+            return (width/20) * level + 4
         }
     }
 }
