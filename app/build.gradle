@@ -1,6 +1,35 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.github.triplet.play'
+
+def gitVersionName = { ->
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'describe', '--dirty'
+            standardOutput = stdout
+        }
+        return stdout.toString().trim()
+    }
+    catch (ignored) {
+        return null;
+    }
+}
+
+def gitVersionCode = { ->
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'rev-list', '--first-parent', '--count', 'origin/master'
+            standardOutput = stdout
+        }
+        return Integer.parseInt(stdout.toString().trim()) * 10
+    }
+    catch (ignored) {
+        return -1;
+    }
+}
 
 android {
     compileSdkVersion 25
@@ -9,14 +38,23 @@ android {
         applicationId "com.adamg.hnreader"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode getVersionCode()
-        versionName getVersionName()
+        versionCode gitVersionCode()
+        versionName gitVersionName()
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        release {
+            storeFile file("android.jks")
+            storePassword System.getenv('STORE_PASSWORD')
+            keyAlias System.getenv('ALIAS_KEY')
+            keyPassword System.getenv('KEY_PASSWORD')
+        }
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     sourceSets {
@@ -60,31 +98,7 @@ repositories {
 kapt {
     generateStubs = true
 }
-
-def getVersionName = { ->
-    try {
-        def stdout = new ByteArrayOutputStream()
-        exec {
-            commandLine 'git', 'describe', '--dirty'
-            standardOutput = stdout
-        }
-        return stdout.toString().trim()
-    }
-    catch (ignored) {
-        return null;
-    }
-}
-
-def getVersionCode = { ->
-    try {
-        def stdout = new ByteArrayOutputStream()
-        exec {
-            commandLine 'git', 'rev-list', '--first-parent', '--count', 'origin/master'
-            standardOutput = stdout
-        }
-        return Integer.parseInt(stdout.toString().trim()) * 100
-    }
-    catch (ignored) {
-        return -1;
-    }
+play {
+    serviceAccountEmail = System.getenv('GOOGLE_API_CLIENT_EMAIL')
+    pk12File = file('key.p12')
 }
