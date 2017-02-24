@@ -2,34 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.triplet.play'
-
-def gitVersionName = { ->
-    try {
-        def stdout = new ByteArrayOutputStream()
-        exec {
-            commandLine 'git', 'describe', '--tags'
-            standardOutput = stdout
-        }
-        return stdout.toString().trim()
-    }
-    catch (ignored) {
-        return null;
-    }
-}
-
-def gitVersionCode = { ->
-    try {
-        def stdout = new ByteArrayOutputStream()
-        exec {
-            commandLine 'git', 'rev-list', '--first-parent', '--count', 'origin/master'
-            standardOutput = stdout
-        }
-        return Integer.parseInt(stdout.toString().trim()) * 10
-    }
-    catch (ignored) {
-        return -1;
-    }
-}
+apply plugin: "com.gladed.androidgitversion"
 
 android {
     compileSdkVersion 25
@@ -38,8 +11,8 @@ android {
         applicationId "com.adamg.hnreader"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode gitVersionCode()
-        versionName gitVersionName()
+        versionCode androidGitVersion.code()
+        versionName androidGitVersion.name()
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
