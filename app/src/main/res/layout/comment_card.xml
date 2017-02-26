@@ -49,6 +49,7 @@
                 <com.adamg.hnreader.customviews.HtmlTextView
                     android:text="As you can see, there’s very little boilerplate, and the code is much more to-the-point. If I were to go back to this code in a few months, it would hardly take me a minute to figure out what’s going on. And that is priceless!"
                     android:id="@+id/commentContent"
+                    android:textColorLink="@color/clickableLinkColor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
