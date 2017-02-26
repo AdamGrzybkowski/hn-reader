@@ -3,7 +3,8 @@ package com.adamg.hnreader
 class AppConstants {
 
     companion object {
-        val ITEM = "story"
-        val ITEM_ID = "story_id"
+        val ITEM = "item"
+        val ITEM_ID = "item_id"
+        val ITEM_URL = "item_url"
     }
 }

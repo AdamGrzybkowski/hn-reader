@@ -33,7 +33,7 @@ class StoryActivity : BaseActivity() {
     private fun setupViewPager(viewPager: ViewPager) {
         var adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(CommentsFragment.create(story.id), getString(R.string.story_comments) + " ("+story.commentsCount + ")")
-        adapter.addFragment(WebViewFragment(), getString(R.string.story_article))
+        adapter.addFragment(WebViewFragment.create(story.url), getString(R.string.story_article))
         viewPager.adapter = adapter
     }
 
