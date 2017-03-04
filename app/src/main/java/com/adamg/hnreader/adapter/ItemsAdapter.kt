@@ -8,12 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import com.adamg.hnreader.AppConstants
 import com.adamg.hnreader.R
+import com.adamg.hnreader.models.Ask
 import com.adamg.hnreader.models.Item
+import com.adamg.hnreader.models.Job
 import com.adamg.hnreader.models.Type
+import com.adamg.hnreader.views.askview.AskActivity
+import com.adamg.hnreader.views.askview.JobActivity
 import com.adamg.hnreader.views.storyview.StoryActivity
 import kotlinx.android.synthetic.main.story_card.view.*
 
-class NewStoriesAdapter(var context: Context, var stories: List<Item>): RecyclerView.Adapter<NewStoriesAdapter.NewItemsViewHolder>() {
+class ItemsAdapter(var context: Context, var stories: List<Item>): RecyclerView.Adapter<ItemsAdapter.NewItemsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): NewItemsViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.story_card, parent, false)
@@ -40,12 +44,19 @@ class NewStoriesAdapter(var context: Context, var stories: List<Item>): Recycler
 
         override fun onClick(view: View?) {
             val story = stories[adapterPosition]
-            if (story.type == Type.LINK) {
+            if (story.type == Type.LINK && story.domain != null) {
                 var intent = Intent(context, StoryActivity::class.java)
                 intent.putExtra(AppConstants.ITEM, story)
+                context.startActivity(intent)
+            } else if (story.type == Type.ASK || story.type == Type.LINK && story.domain == null || story.domain == null) {
+                var intent = Intent(context, AskActivity::class.java)
+                intent.putExtra(AppConstants.ITEM, Ask.fromItem(story))
+                context.startActivity(intent)
+            } else if (story.type == Type.JOB) {
+                var intent = Intent(context, JobActivity::class.java)
+                intent.putExtra(AppConstants.ITEM, Job.fromItem(story))
                 context.startActivity(intent)
             }
         }
     }
-
 }

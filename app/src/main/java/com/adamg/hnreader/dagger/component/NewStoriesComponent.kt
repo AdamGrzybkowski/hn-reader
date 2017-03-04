@@ -2,7 +2,7 @@ package com.adamg.hnreader.dagger.component
 
 import com.adamg.hnreader.dagger.module.NewStoriesModule
 import com.adamg.hnreader.dagger.scope.PerActivity
-import com.adamg.hnreader.views.newstories.NewStoriesPresenter
+import com.adamg.hnreader.views.listfragments.newstories.NewStoriesPresenter
 import dagger.Component
 
 @PerActivity

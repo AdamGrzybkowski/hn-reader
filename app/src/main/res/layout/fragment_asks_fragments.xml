@@ -2,11 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.adamg.hnreader.views.asks.AsksFragments">
+    tools:context=".views.listfragments.asks.AsksFragments">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/ask" />
+        android:text="@string/job1" />
 
 </FrameLayout>

@@ -14,6 +14,15 @@ interface HackerNewsApi {
     @GET("news")
     fun getNewStories(@Query("page") page: Int): Observable<List<Item>>
 
+    @GET("ask")
+    fun getAsks(@Query("page") page: Int): Observable<List<Item>>
+
+    @GET("jobs")
+    fun getJobs(@Query("page") page: Int): Observable<List<Item>>
+
+    @GET("show")
+    fun getShows(@Query("page") page: Int): Observable<List<Item>>
+
     @GET("item/{itemId}")
     fun getItem(@Path("itemId") itemId: Long): Observable<Item>
 

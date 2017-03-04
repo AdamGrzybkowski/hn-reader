@@ -1,12 +1,12 @@
-package com.adamg.hnreader.views.newstories
+package com.adamg.hnreader.views.listfragments
 
 import android.os.Parcel
 import android.os.Parcelable
 import com.adamg.hnreader.models.Item
 import java.util.*
 
-sealed class NewStoriesModel: Parcelable{
-    class Error(val error: String): NewStoriesModel(){
+sealed class ItemsModel : Parcelable {
+    class Error(val error: String): ItemsModel(){
         companion object {
             @JvmField val CREATOR: Parcelable.Creator<Error> = object : Parcelable.Creator<Error> {
                 override fun createFromParcel(source: Parcel): Error = Error(source)
@@ -23,7 +23,7 @@ sealed class NewStoriesModel: Parcelable{
         }
     }
 
-    class Loading(): NewStoriesModel(){
+    class Loading(): ItemsModel(){
         companion object {
             @JvmField val CREATOR: Parcelable.Creator<Loading> = object : Parcelable.Creator<Loading> {
                 override fun createFromParcel(source: Parcel): Loading = Loading(source)
@@ -38,7 +38,7 @@ sealed class NewStoriesModel: Parcelable{
         override fun writeToParcel(dest: Parcel?, flags: Int) {}
     }
 
-    class EmptyResult(): NewStoriesModel(){
+    class EmptyResult(): ItemsModel(){
         companion object {
             @JvmField val CREATOR: Parcelable.Creator<EmptyResult> = object : Parcelable.Creator<EmptyResult> {
                 override fun createFromParcel(source: Parcel): EmptyResult = EmptyResult(source)
@@ -53,7 +53,7 @@ sealed class NewStoriesModel: Parcelable{
         override fun writeToParcel(dest: Parcel?, flags: Int) {}
     }
 
-    class Result(val stories: List<Item>): NewStoriesModel(){
+    class Result(val stories: List<Item>): ItemsModel(){
         companion object {
             @JvmField val CREATOR: Parcelable.Creator<Result> = object : Parcelable.Creator<Result> {
                 override fun createFromParcel(source: Parcel): Result = Result(source)

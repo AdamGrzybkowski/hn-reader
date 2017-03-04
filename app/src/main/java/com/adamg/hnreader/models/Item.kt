@@ -48,7 +48,7 @@ enum class Type {
     JOB,
     @SerializedName("story")
     STORY,
-    @SerializedName("ask")
+    @SerializedName("job")
     ASK,
     @SerializedName("link")
     LINK
