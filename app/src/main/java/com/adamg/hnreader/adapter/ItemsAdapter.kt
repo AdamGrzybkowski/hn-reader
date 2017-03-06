@@ -48,11 +48,11 @@ class ItemsAdapter(var context: Context, var stories: List<Item>): RecyclerView.
                 var intent = Intent(context, StoryActivity::class.java)
                 intent.putExtra(AppConstants.ITEM, story)
                 context.startActivity(intent)
-            } else if (story.type == Type.ASK || story.type == Type.LINK && story.domain == null || story.domain == null) {
+            } else if ((story.type == Type.ASK || story.type == Type.LINK) && story.domain == null || story.domain == null) {
                 var intent = Intent(context, AskActivity::class.java)
                 intent.putExtra(AppConstants.ITEM, Ask.fromItem(story))
                 context.startActivity(intent)
-            } else if (story.type == Type.JOB) {
+            } else if ( (story.type == Type.JOB || story.type == Type.ASK) && story.domain != null) {
                 var intent = Intent(context, JobActivity::class.java)
                 intent.putExtra(AppConstants.ITEM, Job.fromItem(story))
                 context.startActivity(intent)
