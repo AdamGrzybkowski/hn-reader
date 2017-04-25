@@ -8,7 +8,7 @@ import com.adamg.hnreader.views.listfragments.ItemsModel
 import java.util.*
 
 sealed class AskModel : Parcelable {
-    class Error(val error: String): AskModel(){
+    class Error(val error: String?): AskModel(), Parcelable {
         companion object {
             @JvmField val CREATOR: Parcelable.Creator<Error> = object : Parcelable.Creator<Error> {
                 override fun createFromParcel(source: Parcel): Error = Error(source)
@@ -38,6 +38,23 @@ sealed class AskModel : Parcelable {
         override fun describeContents() = 0
 
         override fun writeToParcel(dest: Parcel?, flags: Int) {}
+    }
+
+    class Result(val ask: Ask): AskModel(), Parcelable {
+        companion object {
+            @JvmField val CREATOR: Parcelable.Creator<Result> = object : Parcelable.Creator<Result> {
+                override fun createFromParcel(source: Parcel): Result = Result(source)
+                override fun newArray(size: Int): Array<Result?> = arrayOfNulls(size)
+            }
+        }
+
+        constructor(source: Parcel) : this(source.readParcelable<Ask>(Ask::class.java.classLoader))
+
+        override fun describeContents() = 0
+
+        override fun writeToParcel(dest: Parcel?, flags: Int) {
+            dest?.writeParcelable(ask, 0)
+        }
     }
 
 }

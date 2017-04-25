@@ -13,4 +13,5 @@
     <string name="story_article">article</string>
     <string name="no_comments_message">No comments</string>
     <string name="no_results_message">No results</string>
+    <string name="ask_loading">Loading...</string>
 </resources>

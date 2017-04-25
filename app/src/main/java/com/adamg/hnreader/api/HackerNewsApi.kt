@@ -28,6 +28,6 @@ interface HackerNewsApi {
     fun getItem(@Path("itemId") itemId: Long): Observable<Item>
 
     @GET("item/{itemId}")
-    fun getAsk(@Path("askId") askId: Long): Observable<Ask>
+    fun getAsk(@Path("itemId") askId: Long): Observable<Ask>
 
 }

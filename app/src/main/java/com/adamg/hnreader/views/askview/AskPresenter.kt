@@ -9,7 +9,8 @@ import javax.inject.Inject
 
 class AskPresenter @Inject constructor(val hackerNewsApi: HackerNewsApi): BasePresenter<AskView>() {
 
-    /*fun loadAsk(askId: Long){
+    fun loadAsk(askId: Long){
+        view?.render(AskModel.Loading())
         hackerNewsApi.getAsk(askId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -17,6 +18,6 @@ class AskPresenter @Inject constructor(val hackerNewsApi: HackerNewsApi): BasePr
                         { ask: Ask -> view?.render(AskModel.Result(ask))},
                         { error: Throwable -> view?.render(AskModel.Error(error.message))}
                 )
-    }*/
+    }
 
 }

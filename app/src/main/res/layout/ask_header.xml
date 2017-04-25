@@ -17,23 +17,34 @@
         android:layout_height="wrap_content"/>
 
     <FrameLayout
-        android:padding="8dp"
-        android:background="@color/askContentBackground"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            android:layout_marginTop="8dp"
+            android:id="@+id/frameLayoutAskContent"
+            android:padding="8dp"
+            android:background="@color/askContentBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <com.adamg.hnreader.customviews.HtmlTextView
-            android:id="@+id/askContent"
-            android:text="This will be the story title of some story that might be longer then one line"
+        <ScrollView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+
+            <com.adamg.hnreader.customviews.HtmlTextView
+                android:maxLines="6"
+                android:scrollbars="vertical"
+                android:id="@+id/askContent"
+                android:textColorLink="@color/clickableLinkColor"
+                android:text="This will be the story title of some story that might be longer then one line"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </ScrollView>
 
         <ProgressBar
             android:visibility="gone"
             android:layout_gravity="center"
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:id="@+id/askProgressBar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"/>
 
     </FrameLayout>
 
