@@ -2,6 +2,7 @@ package com.adamg.hnreader.base
 
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.view.MenuItem
 import com.evernote.android.state.StateSaver
 import com.hannesdorfmann.mosby.mvp.MvpActivity
 import com.hannesdorfmann.mosby.mvp.MvpPresenter
@@ -23,5 +24,15 @@ abstract class BaseActivityMvp<V: MvpView, P: MvpPresenter<V>>: MvpActivity<V, P
     }
 
     abstract fun injectDependencies()
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            android.R.id.home -> {
+                super.onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 }

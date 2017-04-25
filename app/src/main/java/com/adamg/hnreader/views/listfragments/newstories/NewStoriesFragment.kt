@@ -83,7 +83,6 @@ class NewStoriesFragment : BaseFragmentMvp<ItemsView, NewStoriesPresenter>(), It
     fun showLoadingState(){
         contentView.isRefreshing = true
         errorView.visibility = GONE
-        recycleView.visibility = GONE
     }
 
     fun showErrorState(error: String){

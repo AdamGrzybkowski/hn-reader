@@ -1,17 +1,14 @@
 <resources>
     <string name="app_name">HNReader</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="new_posts">new</string>
     <string name="comments">comments</string>
     <string name="job1">job1</string>
     <string name="show">show</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="story_comments">comments</string>
     <string name="story_article">article</string>
     <string name="no_comments_message">No comments</string>
     <string name="no_results_message">No results</string>
-    <string name="ask_loading">Loading...</string>
+    <string name="ask_loading">Loading…</string>
 </resources>

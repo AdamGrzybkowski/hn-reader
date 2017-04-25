@@ -89,7 +89,6 @@ class JobsFragment : BaseFragmentMvp<ItemsView, JobsPresenter>(), ItemsView, Swi
     fun showLoadingState(){
         contentView.isRefreshing = true
         errorView.visibility = View.GONE
-        recycleView.visibility = View.GONE
     }
 
     fun showErrorState(error: String){

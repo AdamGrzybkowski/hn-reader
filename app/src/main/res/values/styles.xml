@@ -8,10 +8,15 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorHighlight">@color/textHighlightColor</item>
     </style>
     
     <style name="WhiteTextTheme">
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WhiteProgressBar" parent="AppTheme">
+        <item name="colorAccent">@color/white</item>
     </style>
 
 </resources>

@@ -24,6 +24,7 @@ class HtmlTextView: TextView {
         }
         super.setMovementMethod(LinkMovementMethod.getInstance())
         super.setText(parsedText, type)
+        super.setTextIsSelectable(true)
     }
 
 

@@ -88,7 +88,6 @@ class CommentsFragment:  BaseFragmentMvp<CommentsView, CommentsPresenter>(), Com
     private fun showLoadingState() {
         contentView.isRefreshing = true
         errorView.visibility = View.GONE
-        recycleView.visibility = View.GONE
     }
 
     private fun showEmptyResultState() {

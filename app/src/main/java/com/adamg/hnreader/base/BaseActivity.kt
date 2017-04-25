@@ -3,6 +3,7 @@ package com.adamg.hnreader.base
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import com.evernote.android.state.StateSaver
 
 abstract class BaseActivity: AppCompatActivity() {
@@ -21,5 +22,15 @@ abstract class BaseActivity: AppCompatActivity() {
     }
 
     abstract fun injectDependencies()
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            android.R.id.home -> {
+                super.onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 }
