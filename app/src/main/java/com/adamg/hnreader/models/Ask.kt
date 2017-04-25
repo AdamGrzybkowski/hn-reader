@@ -2,6 +2,7 @@ package com.adamg.hnreader.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.adamg.hnreader.R
 import java.util.*
 
 data class Ask(
@@ -22,7 +23,7 @@ data class Ask(
 
         fun fromItem(item: Item): Ask{
             return Ask(item.id, item.title, item.points, item.user, item.time, item.timeAgo,
-                    item.commentsCount, "Sory Paweł, treść pytania dodam później", listOf())
+                    item.commentsCount, "", listOf())
         }
     }
 
