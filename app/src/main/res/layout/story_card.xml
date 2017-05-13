@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -12,19 +13,9 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:layout_margin="4dp"
+            android:padding="@dimen/padding_normal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <TextView
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:textSize="20sp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:id="@+id/storyNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_marginRight="8dp"
@@ -39,7 +30,8 @@
                     android:layout_marginBottom="4dp"
                     android:id="@+id/storyTitle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    tools:text="Some story title that can take up more the one space !!" />
 
                 <LinearLayout
                     android:weightSum="100"
@@ -61,7 +53,8 @@
                             android:layout_gravity="center_vertical"
                             android:id="@+id/storyPoints"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            tools:text="123"/>
 
                     </LinearLayout>
 
@@ -72,7 +65,8 @@
                         android:layout_gravity="center_vertical"
                         android:id="@+id/storyTime"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        tools:text="4 hours ago" />
 
                     <LinearLayout
                         android:layout_weight="35"
@@ -88,10 +82,12 @@
                             android:id="@+id/storyBy"
                             android:lines="1"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            tools:text="superHeroGuy"/>
                     </LinearLayout>
 
                     <LinearLayout
+                        android:gravity="end"
                         android:layout_weight="15"
                         android:layout_gravity="center"
                         android:orientation="horizontal"
@@ -107,7 +103,8 @@
                         <TextView
                             android:id="@+id/commentsCount"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            tools:text="321"/>
 
                     </LinearLayout>
 

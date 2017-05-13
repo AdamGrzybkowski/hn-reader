@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:card_view="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
         android:layout_marginBottom="4dp"
@@ -12,23 +13,12 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:layout_margin="4dp"
+            android:padding="@dimen/padding_normal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:textSize="20sp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:id="@+id/storyNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
             <LinearLayout
                 android:layout_marginRight="8dp"
-                android:layout_toRightOf="@+id/storyNumber"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -39,7 +29,8 @@
                     android:layout_marginBottom="4dp"
                     android:id="@+id/storyTitle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    tools:text="Some Job title, this could also take more then one line :D"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -53,7 +44,8 @@
                         android:layout_gravity="center_vertical"
                         android:id="@+id/storyTime"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        tools:text="2 hours ago"/>
 
                     <TextView
                         android:layout_alignParentRight="true"
@@ -62,7 +54,8 @@
                         android:id="@+id/storyDomain"
                         android:lines="1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        tools:text="google.com"/>
 
                 </RelativeLayout>
 
