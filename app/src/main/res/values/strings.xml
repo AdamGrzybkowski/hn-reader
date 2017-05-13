@@ -11,4 +11,6 @@
     <string name="no_comments_message">No comments</string>
     <string name="no_results_message">No results</string>
     <string name="ask_loading">Loading…</string>
+    <string name="show_replies_comments">Show replies&#160;</string>
+    <string name="hide_replies_comments">Hide replies&#160;</string>
 </resources>
