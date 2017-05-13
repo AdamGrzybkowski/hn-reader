@@ -9,4 +9,5 @@
     <color name="clickableLinkColor">@color/colorAccent</color>
     <color name="askContentBackground">#ff934b</color>
     <color name="textHighlightColor">#aaff934b</color>
+    <color name="font_gray_light">#c9c9c9</color>
 </resources>

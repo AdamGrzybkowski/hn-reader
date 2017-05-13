@@ -14,11 +14,11 @@ import com.adamg.hnreader.adapter.CommentsAdapter
 import com.adamg.hnreader.base.BaseFragmentMvp
 import com.adamg.hnreader.dagger.component.CommentsComponent
 import com.adamg.hnreader.dagger.component.DaggerCommentsComponent
-import com.adamg.hnreader.models.Comment
 import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.fragment_comments.*
 
-class CommentsFragment:  BaseFragmentMvp<CommentsView, CommentsPresenter>(), CommentsView, SwipeRefreshLayout.OnRefreshListener {
+class CommentsFragment:  BaseFragmentMvp<CommentsView, CommentsPresenter>(), CommentsView,
+        SwipeRefreshLayout.OnRefreshListener, CommentsAdapter.CommentsListener {
 
     lateinit private var commentsComponent: CommentsComponent
     lateinit private var adapter: CommentsAdapter
@@ -42,7 +42,7 @@ class CommentsFragment:  BaseFragmentMvp<CommentsView, CommentsPresenter>(), Com
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         contentView.setOnRefreshListener(this)
-        adapter = CommentsAdapter(activity, listOf())
+        adapter = CommentsAdapter(activity, mutableListOf(), this)
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(context)
         if (state is CommentsModel.Loading) {
@@ -66,7 +66,7 @@ class CommentsFragment:  BaseFragmentMvp<CommentsView, CommentsPresenter>(), Com
             is CommentsModel.EmptyResult -> showEmptyResultState()
             is CommentsModel.Error -> showErrorState(model.error)
             is CommentsModel.Loading -> showLoadingState()
-            is CommentsModel.Result -> showResultState(model.comments)
+            is CommentsModel.Result -> showResultState(model.commentCardModels)
         }
     }
 
@@ -77,11 +77,13 @@ class CommentsFragment:  BaseFragmentMvp<CommentsView, CommentsPresenter>(), Com
         recycleView.visibility = View.GONE
     }
 
-    private fun showResultState(comments: List<Comment>) {
+    private fun showResultState(commentCardModel: List<CommentCardModel>) {
         contentView.isRefreshing = false
         errorView.visibility = View.GONE
         recycleView.visibility = View.VISIBLE
-        adapter.comments = comments
+        val mutableComments = mutableListOf<CommentCardModel>()
+        mutableComments.addAll(commentCardModel)
+        adapter.commentCardModels = mutableComments
         adapter.notifyDataSetChanged()
     }
 
@@ -95,6 +97,10 @@ class CommentsFragment:  BaseFragmentMvp<CommentsView, CommentsPresenter>(), Com
         errorView.text = getString(R.string.no_comments_message)
         contentView.isRefreshing = false
         recycleView.visibility = View.GONE
+    }
+
+    override fun onCommentsStateChanged(commentCardModels: MutableList<CommentCardModel>) {
+        state = CommentsModel.Result(commentCardModels)
     }
 
     override fun createPresenter() = commentsComponent.presenter()
