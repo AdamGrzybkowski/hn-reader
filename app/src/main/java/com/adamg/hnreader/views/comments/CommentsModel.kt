@@ -53,7 +53,7 @@ sealed class CommentsModel: Parcelable {
         override fun writeToParcel(dest: Parcel?, flags: Int) {}
     }
 
-    class Result(val comments: List<Comment>): CommentsModel(){
+    class Result(val commentCardModels: List<CommentCardModel>): CommentsModel(){
         companion object {
             @JvmField val CREATOR: Parcelable.Creator<Result> = object : Parcelable.Creator<Result> {
                 override fun createFromParcel(source: Parcel): Result = Result(source)
@@ -61,12 +61,12 @@ sealed class CommentsModel: Parcelable {
             }
         }
 
-        constructor(source: Parcel) : this(ArrayList<Comment>().apply{ source.readList(this, Comment::class.java.classLoader) })
+        constructor(source: Parcel) : this(ArrayList<CommentCardModel>().apply{ source.readList(this, Comment::class.java.classLoader) })
 
         override fun describeContents() = 0
 
         override fun writeToParcel(dest: Parcel?, flags: Int) {
-            dest?.writeList(comments)
+            dest?.writeList(commentCardModels)
         }
     }
 }

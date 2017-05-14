@@ -33,7 +33,6 @@ class ItemsAdapter(var context: Context, var stories: List<Item>): RecyclerView.
 
     inner class NewItemsViewHolder(val view: View): RecyclerView.ViewHolder(view), View.OnClickListener {
         fun bindStory(story: Item){
-            view.storyNumber.text = (adapterPosition+1).toString() + "."
             view.storyTitle.text = story.title
             view.storyBy.text = story.user
             view.storyPoints.text = story.points.toString()

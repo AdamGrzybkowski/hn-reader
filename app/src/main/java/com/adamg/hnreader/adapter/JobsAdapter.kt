@@ -29,7 +29,6 @@ class JobsAdapter(var context: Context, var stories: List<Item>): RecyclerView.A
 
     inner class JobsViewHolder(val view: View): RecyclerView.ViewHolder(view), View.OnClickListener {
         fun bindStory(story: Item){
-            view.storyNumber.text = (adapterPosition+1).toString() + "."
             view.storyTitle.text = story.title
             view.storyTime.text = story.timeAgo
             view.storyDomain.text = story.domain
