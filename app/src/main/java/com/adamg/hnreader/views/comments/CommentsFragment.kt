@@ -42,7 +42,7 @@ class CommentsFragment:  BaseFragmentMvp<CommentsView, CommentsPresenter>(), Com
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         contentView.setOnRefreshListener(this)
-        adapter = CommentsAdapter(activity, mutableListOf(), this)
+        adapter = CommentsAdapter(mutableListOf(), this)
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(context)
         if (state is CommentsModel.Loading) {

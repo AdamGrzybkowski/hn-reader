@@ -15,6 +15,8 @@ import com.adamg.hnreader.base.BaseFragmentMvp
 import com.adamg.hnreader.dagger.component.DaggerShowsComponent
 import com.adamg.hnreader.dagger.component.ShowsComponent
 import com.adamg.hnreader.models.Item
+import com.adamg.hnreader.utils.parseItemTypeForIntent
+import com.adamg.hnreader.views.listfragments.ItemListener
 import com.adamg.hnreader.views.listfragments.ItemsModel
 import com.adamg.hnreader.views.listfragments.ItemsView
 import com.adamg.hnreader.views.listfragments.newstories.ShowsPresenter
@@ -25,7 +27,8 @@ import kotlinx.android.synthetic.main.fragment_new_stories.*
 /**
  * A simple [Fragment] subclass.
  */
-class ShowsFragment : BaseFragmentMvp<ItemsView, ShowsPresenter>(), ItemsView, SwipeRefreshLayout.OnRefreshListener {
+class ShowsFragment : BaseFragmentMvp<ItemsView, ShowsPresenter>(), ItemsView,
+        SwipeRefreshLayout.OnRefreshListener, ItemListener {
 
     lateinit private var showsComponent: ShowsComponent
     lateinit private var adapter: ItemsAdapter
@@ -46,7 +49,7 @@ class ShowsFragment : BaseFragmentMvp<ItemsView, ShowsPresenter>(), ItemsView, S
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         contentView.setOnRefreshListener(this)
-        adapter = ItemsAdapter(activity, listOf())
+        adapter = ItemsAdapter(listOf(), this)
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(context)
         if (state is ItemsModel.Loading) {
@@ -103,6 +106,11 @@ class ShowsFragment : BaseFragmentMvp<ItemsView, ShowsPresenter>(), ItemsView, S
         recycleView.visibility = View.VISIBLE
         adapter.stories = stories
         adapter.notifyDataSetChanged()
+    }
+
+    override fun onItemClicked(item: Item) {
+        val intent = parseItemTypeForIntent(context, item)
+        startActivity(intent)
     }
 
     override fun injectDependencies(){

@@ -2,7 +2,6 @@ package com.adamg.hnreader.models
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
 import java.util.*
 
 data class Item(
@@ -13,9 +12,9 @@ data class Item(
         val time: Long,
         val timeAgo: String,
         val commentsCount: Int,
-        val type: Type,
+        val type: ItemType,
         val url: String,
-        val domain: String,
+        val domain: String?,
         val comments: List<Comment>): Parcelable{
     companion object {
         @JvmField val CREATOR: Parcelable.Creator<Item> = object : Parcelable.Creator<Item> {
@@ -24,7 +23,7 @@ data class Item(
         }
     }
 
-    constructor(source: Parcel) : this(source.readLong(), source.readString(), source.readInt(), source.readString(), source.readLong(), source.readString(), source.readInt(), Type.values()[source.readInt()], source.readString(), source.readString(), ArrayList<Comment>().apply{ source.readList(this, Comment::class.java.classLoader) })
+    constructor(source: Parcel) : this(source.readLong(), source.readString(), source.readInt(), source.readString(), source.readLong(), source.readString(), source.readInt(), ItemType.values()[source.readInt()], source.readString(), source.readString(), ArrayList<Comment>().apply{ source.readList(this, Comment::class.java.classLoader) })
 
     override fun describeContents() = 0
 
@@ -41,15 +40,4 @@ data class Item(
         dest?.writeString(domain)
         dest?.writeList(comments)
     }
-}
-
-enum class Type {
-    @SerializedName("job")
-    JOB,
-    @SerializedName("story")
-    STORY,
-    @SerializedName("job")
-    ASK,
-    @SerializedName("link")
-    LINK
 }

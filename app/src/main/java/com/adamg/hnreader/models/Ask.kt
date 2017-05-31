@@ -13,7 +13,7 @@ data class Ask(
         val time: Long,
         val timeAgo: String,
         val commentsCount: Int,
-        val content: String,
+        val content: String?,
         val comments: List<Comment>): Parcelable{
     companion object {
         @JvmField val CREATOR: Parcelable.Creator<Ask> = object : Parcelable.Creator<Ask> {

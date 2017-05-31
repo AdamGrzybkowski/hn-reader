@@ -15,12 +15,15 @@ import com.adamg.hnreader.base.BaseFragmentMvp
 import com.adamg.hnreader.dagger.component.DaggerNewStoriesComponent
 import com.adamg.hnreader.dagger.component.NewStoriesComponent
 import com.adamg.hnreader.models.Item
+import com.adamg.hnreader.utils.parseItemTypeForIntent
+import com.adamg.hnreader.views.listfragments.ItemListener
 import com.adamg.hnreader.views.listfragments.ItemsModel
 import com.adamg.hnreader.views.listfragments.ItemsView
 import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.fragment_new_stories.*
 
-class NewStoriesFragment : BaseFragmentMvp<ItemsView, NewStoriesPresenter>(), ItemsView, SwipeRefreshLayout.OnRefreshListener {
+class NewStoriesFragment : BaseFragmentMvp<ItemsView, NewStoriesPresenter>(), ItemsView,
+        SwipeRefreshLayout.OnRefreshListener, ItemListener {
 
     lateinit private var newStoriesComponent: NewStoriesComponent
     lateinit private var adapter: ItemsAdapter
@@ -41,7 +44,7 @@ class NewStoriesFragment : BaseFragmentMvp<ItemsView, NewStoriesPresenter>(), It
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         contentView.setOnRefreshListener(this)
-        adapter = ItemsAdapter(activity, listOf())
+        adapter = ItemsAdapter(listOf(), this)
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(context)
         if (state is ItemsModel.Loading) {
@@ -98,6 +101,11 @@ class NewStoriesFragment : BaseFragmentMvp<ItemsView, NewStoriesPresenter>(), It
         recycleView.visibility = VISIBLE
         adapter.stories = stories
         adapter.notifyDataSetChanged()
+    }
+
+    override fun onItemClicked(item: Item) {
+        val intent = parseItemTypeForIntent(context, item)
+        startActivity(intent)
     }
 
     override fun injectDependencies(){

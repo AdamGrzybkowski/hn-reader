@@ -14,15 +14,16 @@ import com.adamg.hnreader.adapter.ItemsAdapter
 import com.adamg.hnreader.base.BaseFragmentMvp
 import com.adamg.hnreader.dagger.component.AsksComponent
 import com.adamg.hnreader.dagger.component.DaggerAsksComponent
-import com.adamg.hnreader.dagger.component.DaggerNewStoriesComponent
-import com.adamg.hnreader.dagger.component.NewStoriesComponent
 import com.adamg.hnreader.models.Item
+import com.adamg.hnreader.utils.parseItemTypeForIntent
+import com.adamg.hnreader.views.listfragments.ItemListener
 import com.adamg.hnreader.views.listfragments.ItemsModel
 import com.adamg.hnreader.views.listfragments.ItemsView
 import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.fragment_new_stories.*
 
-class AsksFragment : BaseFragmentMvp<ItemsView, AsksPresenter>(), ItemsView, SwipeRefreshLayout.OnRefreshListener {
+class AsksFragment : BaseFragmentMvp<ItemsView, AsksPresenter>(), ItemsView,
+        SwipeRefreshLayout.OnRefreshListener, ItemListener {
 
     lateinit private var asksComponent: AsksComponent
     lateinit private var adapter: ItemsAdapter
@@ -43,7 +44,7 @@ class AsksFragment : BaseFragmentMvp<ItemsView, AsksPresenter>(), ItemsView, Swi
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         contentView.setOnRefreshListener(this)
-        adapter = ItemsAdapter(activity, listOf())
+        adapter = ItemsAdapter(listOf(), this)
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(context)
         if (state is ItemsModel.Loading) {
@@ -100,6 +101,11 @@ class AsksFragment : BaseFragmentMvp<ItemsView, AsksPresenter>(), ItemsView, Swi
         recycleView.visibility = VISIBLE
         adapter.stories = stories
         adapter.notifyDataSetChanged()
+    }
+
+    override fun onItemClicked(item: Item) {
+        val intent = parseItemTypeForIntent(context, item)
+        startActivity(intent)
     }
 
     override fun injectDependencies(){

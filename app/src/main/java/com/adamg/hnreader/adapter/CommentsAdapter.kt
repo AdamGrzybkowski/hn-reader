@@ -1,6 +1,5 @@
 package com.adamg.hnreader.adapter
 
-import android.app.Activity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +13,7 @@ import com.adamg.hnreader.views.comments.CommentCardModel
 import kotlinx.android.synthetic.main.comment_card.view.*
 
 
-class CommentsAdapter(var context: Activity,
-                      var commentCardModels: MutableList<CommentCardModel>,
+class CommentsAdapter(var commentCardModels: MutableList<CommentCardModel>,
                       var commentsListener: CommentsListener): RecyclerView.Adapter<CommentsAdapter.CommentViewHolder>() {
 
     private val cardViewMaxWeight = 20

@@ -1,6 +1,7 @@
 package com.adamg.hnreader.views.listfragments.shows
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -8,14 +9,17 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.adamg.hnreader.AppConstants
 import com.adamg.hnreader.HNApp
 import com.adamg.hnreader.R
-import com.adamg.hnreader.adapter.ItemsAdapter
 import com.adamg.hnreader.adapter.JobsAdapter
 import com.adamg.hnreader.base.BaseFragmentMvp
 import com.adamg.hnreader.dagger.component.DaggerJobsComponent
 import com.adamg.hnreader.dagger.component.JobsComponent
 import com.adamg.hnreader.models.Item
+import com.adamg.hnreader.models.Job
+import com.adamg.hnreader.views.askview.JobActivity
+import com.adamg.hnreader.views.listfragments.ItemListener
 import com.adamg.hnreader.views.listfragments.ItemsModel
 import com.adamg.hnreader.views.listfragments.ItemsView
 import com.adamg.hnreader.views.listfragments.newstories.JobsPresenter
@@ -26,7 +30,8 @@ import kotlinx.android.synthetic.main.fragment_new_stories.*
 /**
  * A simple [Fragment] subclass.
  */
-class JobsFragment : BaseFragmentMvp<ItemsView, JobsPresenter>(), ItemsView, SwipeRefreshLayout.OnRefreshListener {
+class JobsFragment : BaseFragmentMvp<ItemsView, JobsPresenter>(), ItemsView,
+        SwipeRefreshLayout.OnRefreshListener, ItemListener {
 
     lateinit private var jobsComponent: JobsComponent
     lateinit private var adapter: JobsAdapter
@@ -47,7 +52,7 @@ class JobsFragment : BaseFragmentMvp<ItemsView, JobsPresenter>(), ItemsView, Swi
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         contentView.setOnRefreshListener(this)
-        adapter = JobsAdapter(activity, listOf())
+        adapter = JobsAdapter(listOf(), this)
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(context)
         if (state is ItemsModel.Loading) {
@@ -104,6 +109,12 @@ class JobsFragment : BaseFragmentMvp<ItemsView, JobsPresenter>(), ItemsView, Swi
         recycleView.visibility = View.VISIBLE
         adapter.stories = stories
         adapter.notifyDataSetChanged()
+    }
+
+    override fun onItemClicked(item: Item) {
+        val intent = Intent(activity, JobActivity::class.java)
+        intent.putExtra(AppConstants.ITEM, Job.fromItem(item))
+        startActivity(intent)
     }
 
     override fun injectDependencies(){
