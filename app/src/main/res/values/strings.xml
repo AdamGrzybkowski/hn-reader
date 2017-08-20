@@ -1,8 +1,6 @@
 <resources>
-
     <string name="new_posts">new</string>
     <string name="comments">comments</string>
-    <string name="job1">job1</string>
     <string name="show">show</string>
 
     <string name="story_comments">comments</string>

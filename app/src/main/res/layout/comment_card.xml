@@ -32,26 +32,26 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:textStyle="bold"
-                        android:text="SomeSuperGuy"
                         android:id="@+id/commentAuthor"
                         android:layout_alignParentLeft="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        tools:text="SomeSuperGuy" />
                     <TextView
                         android:textStyle="italic"
-                        android:text="5 hours ago"
                         android:id="@+id/commentAgo"
                         android:layout_alignParentRight="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        tools:text="5 hours ago" />
                 </RelativeLayout>
 
                 <com.adamg.hnreader.customviews.HtmlTextView
-                    android:text="As you can see, there’s very little boilerplate, and the code is much more to-the-point. If I were to go back to this code in a few months, it would hardly take me a minute to figure out what’s going on. And that is priceless!"
                     android:id="@+id/commentContent"
                     android:textColorLink="@color/clickableLinkColor"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    tools:text="As you can see, there’s very little boilerplate, and the code is much more to-the-point. If I were to go back to this code in a few months, it would hardly take me a minute to figure out what’s going on. And that is priceless!" />
 
                   <LinearLayout
                       android:visibility="visible"
@@ -71,10 +71,10 @@
                               android:id="@+id/textViewShowReplies"
                               android:textColor="@color/font_gray_light"
                               android:textAlignment="center"
-                              android:text="@string/show_replies_comments"
                               android:background="?attr/selectableItemBackground"
                               android:layout_width="wrap_content"
-                              android:layout_height="wrap_content" />
+                              android:layout_height="wrap_content"
+                              tools:text="@string/show_replies_comments" />
 
                           <TextView
                               android:clickable="true"
@@ -83,10 +83,10 @@
                               android:id="@+id/textViewHideReplies"
                               android:textColor="@color/font_gray_light"
                               android:textAlignment="center"
-                              android:text="@string/hide_replies_comments"
                               android:background="?attr/selectableItemBackground"
                               android:layout_width="wrap_content"
-                              android:layout_height="wrap_content" />
+                              android:layout_height="wrap_content"
+                              tools:text="@string/hide_replies_comments" />
 
                       </FrameLayout>
 
