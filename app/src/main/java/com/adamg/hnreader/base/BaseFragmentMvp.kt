@@ -2,9 +2,9 @@ package com.adamg.hnreader.base
 
 import android.os.Bundle
 import com.evernote.android.state.StateSaver
-import com.hannesdorfmann.mosby.mvp.MvpFragment
-import com.hannesdorfmann.mosby.mvp.MvpPresenter
-import com.hannesdorfmann.mosby.mvp.MvpView
+import com.hannesdorfmann.mosby3.mvp.MvpFragment
+import com.hannesdorfmann.mosby3.mvp.MvpPresenter
+import com.hannesdorfmann.mosby3.mvp.MvpView
 
 abstract class BaseFragmentMvp<V: MvpView, P: MvpPresenter<V>>: MvpFragment<V, P>() {
 

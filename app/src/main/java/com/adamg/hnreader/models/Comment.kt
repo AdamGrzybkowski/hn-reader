@@ -5,7 +5,7 @@ data class Comment(
         val level: Int,
         val user: String,
         val time: Long,
-        val time_ago: String,
+        val timeAgo: String,
         val content: String,
         val comments: List<Comment>
 )

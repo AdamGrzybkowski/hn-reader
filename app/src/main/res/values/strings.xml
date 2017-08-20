@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">HNReader</string>
 
     <string name="new_posts">new</string>
     <string name="comments">comments</string>

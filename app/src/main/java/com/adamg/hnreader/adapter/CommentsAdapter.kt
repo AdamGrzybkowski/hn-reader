@@ -34,7 +34,7 @@ class CommentsAdapter(var commentCardModels: MutableList<CommentCardModel>,
 
         fun bindComment(commentCardModel: CommentCardModel){
             view.commentAuthor.text = commentCardModel.comment.user
-            view.commentAgo.text = commentCardModel.comment.time_ago
+            view.commentAgo.text = commentCardModel.comment.timeAgo
             view.commentContent.text = commentCardModel.comment.content
             if(commentCardModel.comment.comments.isNotEmpty()) {
                 view.linearLayoutShowMoreComments.visibility = VISIBLE

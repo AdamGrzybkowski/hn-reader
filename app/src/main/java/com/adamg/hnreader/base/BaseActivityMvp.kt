@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.MenuItem
 import com.evernote.android.state.StateSaver
-import com.hannesdorfmann.mosby.mvp.MvpActivity
-import com.hannesdorfmann.mosby.mvp.MvpPresenter
-import com.hannesdorfmann.mosby.mvp.MvpView
+import com.hannesdorfmann.mosby3.mvp.MvpActivity
+import com.hannesdorfmann.mosby3.mvp.MvpPresenter
+import com.hannesdorfmann.mosby3.mvp.MvpView
 
 abstract class BaseActivityMvp<V: MvpView, P: MvpPresenter<V>>: MvpActivity<V, P>() {
 

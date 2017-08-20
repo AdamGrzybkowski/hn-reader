@@ -2,6 +2,7 @@ package com.adamg.hnreader.dagger.module
 
 import com.adamg.hnreader.api.HackerNewsApi
 import com.adamg.hnreader.dagger.scope.PerApplication
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -28,7 +29,7 @@ class ApplicationModule(val baseUrl: String) {
 
     @PerApplication
     @Provides
-    fun provideGsonConverterFactory(): GsonConverterFactory{
+    fun provideGsonConverterFactory(): GsonConverterFactory {
         val gson = GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create()
@@ -39,6 +40,7 @@ class ApplicationModule(val baseUrl: String) {
     @Provides
     fun provideOkHttpClient(): OkHttpClient{
         return OkHttpClient.Builder()
+                .addNetworkInterceptor(StethoInterceptor())
                 .build()
     }
 
