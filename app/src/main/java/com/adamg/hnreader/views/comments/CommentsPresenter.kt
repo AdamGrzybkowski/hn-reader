@@ -1,8 +1,7 @@
 package com.adamg.hnreader.views.comments
 
 import com.adamg.hnreader.api.HackerNewsApi
-import com.adamg.hnreader.base.BasePresenter
-import com.adamg.hnreader.models.Comment
+import com.adamg.hnreader.views.base.BasePresenter
 import com.adamg.hnreader.models.Item
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers

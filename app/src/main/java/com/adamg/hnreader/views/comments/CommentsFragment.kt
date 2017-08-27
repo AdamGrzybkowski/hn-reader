@@ -11,10 +11,9 @@ import com.adamg.hnreader.AppConstants
 import com.adamg.hnreader.HNApp
 import com.adamg.hnreader.R
 import com.adamg.hnreader.adapter.CommentsAdapter
-import com.adamg.hnreader.base.BaseFragmentMvp
 import com.adamg.hnreader.dagger.component.CommentsComponent
 import com.adamg.hnreader.dagger.component.DaggerCommentsComponent
-import com.evernote.android.state.State
+import com.adamg.hnreader.views.base.BaseFragmentMvp
 import kotlinx.android.synthetic.main.fragment_comments.*
 
 class CommentsFragment:  BaseFragmentMvp<CommentsView, CommentsPresenter>(), CommentsView,
@@ -23,15 +22,10 @@ class CommentsFragment:  BaseFragmentMvp<CommentsView, CommentsPresenter>(), Com
     lateinit private var commentsComponent: CommentsComponent
     lateinit private var adapter: CommentsAdapter
 
-    @State
-    var state: CommentsModel = CommentsModel.Loading()
-    @State
-    var itemId: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
-        itemId = arguments.getLong(AppConstants.ITEM_ID)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -45,11 +39,7 @@ class CommentsFragment:  BaseFragmentMvp<CommentsView, CommentsPresenter>(), Com
         adapter = CommentsAdapter(mutableListOf(), this)
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(context)
-        if (state is CommentsModel.Loading) {
-            loadData(false)
-        } else {
-            render(state)
-        }
+        loadData(false)
     }
 
     override fun onRefresh() {
@@ -57,11 +47,10 @@ class CommentsFragment:  BaseFragmentMvp<CommentsView, CommentsPresenter>(), Com
     }
 
     private fun loadData(pullToRefresh: Boolean){
-        presenter.loadComments(itemId, pullToRefresh)
+        presenter.loadComments(arguments.getLong(AppConstants.ITEM_ID), pullToRefresh)
     }
 
     override fun render(model: CommentsModel) {
-        state = model
         when(model){
             is CommentsModel.EmptyResult -> showEmptyResultState()
             is CommentsModel.Error -> showErrorState(model.error)
@@ -100,7 +89,7 @@ class CommentsFragment:  BaseFragmentMvp<CommentsView, CommentsPresenter>(), Com
     }
 
     override fun onCommentsStateChanged(commentCardModels: MutableList<CommentCardModel>) {
-        state = CommentsModel.Result(commentCardModels)
+//        state = CommentsModel.Result(commentCardModels)
     }
 
     override fun createPresenter() = commentsComponent.presenter()

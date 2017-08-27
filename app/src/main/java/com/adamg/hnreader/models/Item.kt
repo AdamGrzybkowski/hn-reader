@@ -1,43 +1,19 @@
 package com.adamg.hnreader.models
 
-import android.os.Parcel
-import android.os.Parcelable
-import java.util.*
+import io.realm.RealmList
+import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 
-data class Item(
-        val id: Long,
-        val title: String,
-        val points: Int,
-        val user: String,
-        val time: Long,
-        val timeAgo: String,
-        val commentsCount: Int,
-        val type: ItemType,
-        val url: String,
-        val domain: String?,
-        val comments: List<Comment>): Parcelable{
-    companion object {
-        @JvmField val CREATOR: Parcelable.Creator<Item> = object : Parcelable.Creator<Item> {
-            override fun createFromParcel(source: Parcel): Item = Item(source)
-            override fun newArray(size: Int): Array<Item?> = arrayOfNulls(size)
-        }
-    }
-
-    constructor(source: Parcel) : this(source.readLong(), source.readString(), source.readInt(), source.readString(), source.readLong(), source.readString(), source.readInt(), ItemType.values()[source.readInt()], source.readString(), source.readString(), ArrayList<Comment>().apply{ source.readList(this, Comment::class.java.classLoader) })
-
-    override fun describeContents() = 0
-
-    override fun writeToParcel(dest: Parcel?, flags: Int) {
-        dest?.writeLong(id)
-        dest?.writeString(title)
-        dest?.writeInt(points)
-        dest?.writeString(user)
-        dest?.writeLong(time)
-        dest?.writeString(timeAgo)
-        dest?.writeInt(commentsCount)
-        dest?.writeInt(type.ordinal)
-        dest?.writeString(url)
-        dest?.writeString(domain)
-        dest?.writeList(comments)
-    }
-}
+open class Item(
+        @PrimaryKey var id: Long = 0,
+        var title: String? = null,
+        var points: Int? = null,
+        var user: String? = null,
+        var time: Long? = 0,
+        var time_ago: String? = null,
+        var comments_count: Int = 0,
+        var type: String = "link",
+        var url: String? = null,
+        var content: String? = null,
+        var domain: String? = null,
+        var comments: RealmList<Comment> = RealmList()): RealmObject()

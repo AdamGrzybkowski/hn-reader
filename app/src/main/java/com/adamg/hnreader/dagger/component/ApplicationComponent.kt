@@ -8,6 +8,5 @@ import dagger.Component
 @PerApplication
 @Component(modules = kotlin.arrayOf(ApplicationModule::class))
 interface ApplicationComponent{
-
     fun exposeHackerNewApi(): HackerNewsApi
 }

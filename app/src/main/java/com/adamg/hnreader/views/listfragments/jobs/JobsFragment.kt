@@ -1,7 +1,6 @@
 package com.adamg.hnreader.views.listfragments.shows
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -9,21 +8,17 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.adamg.hnreader.AppConstants
 import com.adamg.hnreader.HNApp
 import com.adamg.hnreader.R
 import com.adamg.hnreader.adapter.JobsAdapter
-import com.adamg.hnreader.base.BaseFragmentMvp
 import com.adamg.hnreader.dagger.component.DaggerJobsComponent
 import com.adamg.hnreader.dagger.component.JobsComponent
 import com.adamg.hnreader.models.Item
-import com.adamg.hnreader.models.Job
-import com.adamg.hnreader.views.askview.JobActivity
+import com.adamg.hnreader.views.base.BaseFragmentMvp
 import com.adamg.hnreader.views.listfragments.ItemListener
-import com.adamg.hnreader.views.listfragments.ItemsModel
+import com.adamg.hnreader.views.listfragments.ItemsUiModel
 import com.adamg.hnreader.views.listfragments.ItemsView
 import com.adamg.hnreader.views.listfragments.newstories.JobsPresenter
-import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.fragment_new_stories.*
 
 
@@ -35,9 +30,6 @@ class JobsFragment : BaseFragmentMvp<ItemsView, JobsPresenter>(), ItemsView,
 
     lateinit private var jobsComponent: JobsComponent
     lateinit private var adapter: JobsAdapter
-
-    @State
-    var state: ItemsModel = ItemsModel.Loading()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,11 +47,7 @@ class JobsFragment : BaseFragmentMvp<ItemsView, JobsPresenter>(), ItemsView,
         adapter = JobsAdapter(listOf(), this)
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(context)
-        if (state is ItemsModel.Loading) {
-            loadData(false)
-        } else {
-            render(state)
-        }
+        loadData(false)
     }
 
     override fun onRefresh() {
@@ -74,13 +62,12 @@ class JobsFragment : BaseFragmentMvp<ItemsView, JobsPresenter>(), ItemsView,
         return jobsComponent.presenter()
     }
 
-    override fun render(viewState: ItemsModel){
-        state = viewState
-        when(viewState){
-            is ItemsModel.EmptyResult -> showEmptyResultState()
-            is ItemsModel.Error -> showErrorState(viewState.error)
-            is ItemsModel.Loading -> showLoadingState()
-            is ItemsModel.Result -> showResultState(viewState.stories)
+    override fun render(itemsUiModel: ItemsUiModel){
+        when {
+            itemsUiModel.isEmpty() -> showEmptyResultState()
+            itemsUiModel.isError() -> showErrorState(itemsUiModel.getError())
+            itemsUiModel.isLoading() -> showLoadingState()
+            itemsUiModel.isSuccess() -> showResultState(itemsUiModel.getItems())
         }
     }
 
@@ -112,9 +99,9 @@ class JobsFragment : BaseFragmentMvp<ItemsView, JobsPresenter>(), ItemsView,
     }
 
     override fun onItemClicked(item: Item) {
-        val intent = Intent(activity, JobActivity::class.java)
-        intent.putExtra(AppConstants.ITEM, Job.fromItem(item))
-        startActivity(intent)
+//        val intent = Intent(activity, JobActivity::class.java)
+//        intent.putExtra(AppConstants.ITEM, Job.fromItem(item))
+//        startActivity(intent)
     }
 
     override fun injectDependencies(){

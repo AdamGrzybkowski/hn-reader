@@ -11,16 +11,14 @@ import android.view.ViewGroup
 import com.adamg.hnreader.HNApp
 import com.adamg.hnreader.R
 import com.adamg.hnreader.adapter.ItemsAdapter
-import com.adamg.hnreader.base.BaseFragmentMvp
 import com.adamg.hnreader.dagger.component.DaggerShowsComponent
 import com.adamg.hnreader.dagger.component.ShowsComponent
 import com.adamg.hnreader.models.Item
-import com.adamg.hnreader.utils.parseItemTypeForIntent
+import com.adamg.hnreader.views.base.BaseFragmentMvp
 import com.adamg.hnreader.views.listfragments.ItemListener
-import com.adamg.hnreader.views.listfragments.ItemsModel
+import com.adamg.hnreader.views.listfragments.ItemsUiModel
 import com.adamg.hnreader.views.listfragments.ItemsView
 import com.adamg.hnreader.views.listfragments.newstories.ShowsPresenter
-import com.evernote.android.state.State
 import kotlinx.android.synthetic.main.fragment_new_stories.*
 
 
@@ -32,9 +30,6 @@ class ShowsFragment : BaseFragmentMvp<ItemsView, ShowsPresenter>(), ItemsView,
 
     lateinit private var showsComponent: ShowsComponent
     lateinit private var adapter: ItemsAdapter
-
-    @State
-    var state: ItemsModel = ItemsModel.Loading()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,11 +47,7 @@ class ShowsFragment : BaseFragmentMvp<ItemsView, ShowsPresenter>(), ItemsView,
         adapter = ItemsAdapter(listOf(), this)
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(context)
-        if (state is ItemsModel.Loading) {
-            loadData(false)
-        } else {
-            render(state)
-        }
+        loadData(false)
     }
 
     override fun onRefresh() {
@@ -71,13 +62,12 @@ class ShowsFragment : BaseFragmentMvp<ItemsView, ShowsPresenter>(), ItemsView,
         return showsComponent.presenter()
     }
 
-    override fun render(viewState: ItemsModel){
-        state = viewState
-        when(viewState){
-            is ItemsModel.EmptyResult -> showEmptyResultState()
-            is ItemsModel.Error -> showErrorState(viewState.error)
-            is ItemsModel.Loading -> showLoadingState()
-            is ItemsModel.Result -> showResultState(viewState.stories)
+    override fun render(itemsUiModel: ItemsUiModel){
+        when {
+            itemsUiModel.isEmpty() -> showEmptyResultState()
+            itemsUiModel.isError() -> showErrorState(itemsUiModel.getError())
+            itemsUiModel.isLoading() -> showLoadingState()
+            itemsUiModel.isSuccess() -> showResultState(itemsUiModel.getItems())
         }
     }
 
@@ -109,8 +99,8 @@ class ShowsFragment : BaseFragmentMvp<ItemsView, ShowsPresenter>(), ItemsView,
     }
 
     override fun onItemClicked(item: Item) {
-        val intent = parseItemTypeForIntent(context, item)
-        startActivity(intent)
+//        val intent = parseItemTypeForIntent(context, item)
+//        startActivity(intent)
     }
 
     override fun injectDependencies(){

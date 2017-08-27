@@ -1,6 +1,5 @@
 package com.adamg.hnreader.api
 
-import com.adamg.hnreader.models.Ask
 import com.adamg.hnreader.models.Item
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -11,6 +10,9 @@ interface HackerNewsApi {
 
     @GET("news")
     fun getNewStories(@Query("page") page: Int): Observable<List<Item>>
+
+    @GET("best")
+    fun getBestStories(@Query("page") page: Int): Observable<List<Item>>
 
     @GET("ask")
     fun getAsks(@Query("page") page: Int): Observable<List<Item>>
@@ -25,6 +27,6 @@ interface HackerNewsApi {
     fun getItem(@Path("itemId") itemId: Long): Observable<Item>
 
     @GET("item/{itemId}")
-    fun getAsk(@Path("itemId") askId: Long): Observable<Ask>
+    fun getAsk(@Path("itemId") askId: Long): Observable<Item>
 
 }

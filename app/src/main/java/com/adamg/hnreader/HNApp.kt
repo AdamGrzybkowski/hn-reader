@@ -6,6 +6,9 @@ import com.adamg.hnreader.dagger.component.DaggerApplicationComponent
 import com.adamg.hnreader.dagger.module.ApplicationModule
 import com.facebook.stetho.Stetho
 import com.squareup.leakcanary.LeakCanary
+import com.uphyca.stetho_realm.RealmInspectorModulesProvider
+import io.realm.Realm
+import io.realm.RealmConfiguration
 
 class HNApp : Application() {
 
@@ -19,13 +22,24 @@ class HNApp : Application() {
         LeakCanary.install(this)
         initializeApplicationComponent()
         initStetho()
-
+        initRealm()
     }
+
+    private fun initRealm() {
+        Realm.init(this)
+        val realmConfiguration = RealmConfiguration.Builder()
+                .schemaVersion(1)
+                .deleteRealmIfMigrationNeeded()
+                .build()
+        Realm.setDefaultConfiguration(realmConfiguration)
+    }
+
 
     private fun initStetho() {
         Stetho.initialize(
                 Stetho.newInitializerBuilder(this)
                         .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
                         .build())
     }
 
