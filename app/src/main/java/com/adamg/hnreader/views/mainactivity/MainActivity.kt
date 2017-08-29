@@ -18,10 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setSupportActionBar(toolbar)
-        supportActionBar?.setDefaultDisplayHomeAsUpEnabled(true)
-
         setupViewPager(viewPager)
-
         tabs.setupWithViewPager(viewPager)
     }
 

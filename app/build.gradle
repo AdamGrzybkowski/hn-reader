@@ -2,12 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'realm-android'
 apply plugin: 'com.github.triplet.play'
 apply plugin: "com.gladed.androidgitversion"
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.adamg.hnreader"
         minSdkVersion 16
@@ -47,10 +48,14 @@ android {
     lintOptions {
         warning 'InvalidPackage'
     }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
 }
 
 dependencies {
-    ext.androidSupportVersion = '25.3.1'
+    ext.androidSupportVersion = '26.0.1'
     ext.mosbyVersion = '3.0.4'
     ext.leakCanaryVersion = '1.5.1'
     ext.daggerVersion = '2.11'
@@ -70,11 +75,10 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile "com.hannesdorfmann.mosby3:mvp:$mosbyVersion"
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    compile "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
     compile "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
     compile "io.reactivex:rxjava:$rxJavaVersion"
     compile "io.reactivex:rxandroid:1.2.1"
-    compile "com.evernote:android-state:1.0.1"
     compile "com.google.dagger:dagger:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     debugCompile "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
@@ -83,13 +87,15 @@ dependencies {
     compile "org.jetbrains.anko:anko-appcompat-v7-commons:$ankoVersion"
     compile 'io.reactivex:rxkotlin:1.0.0'
     testCompile "junit:junit:4.12"
-    annotationProcessor "com.evernote:android-state-processor:1.0.1"
-    kapt "com.google.dagger:dagger-compiler:2.9"
-    provided "javax.annotation:jsr250-api:1.0"
     compile 'com.facebook.stetho:stetho:1.5.0'
     compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    compile 'com.uphyca:stetho_realm:2.1.0'
+    compile 'com.github.vicpinm:krealmextensions:1.1.1'
+    compile "com.github.Commit451.Regalia:regalia-moshi:1.3.1"
 }
 repositories {
+    maven { url 'https://maven.google.com' }
+    maven { url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo' }
     mavenCentral()
 }
 kapt {

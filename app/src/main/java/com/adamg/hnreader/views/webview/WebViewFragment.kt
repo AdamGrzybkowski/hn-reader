@@ -13,8 +13,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.adamg.hnreader.AppConstants
 import com.adamg.hnreader.R
-import com.adamg.hnreader.base.BaseFragment
-import com.evernote.android.state.State
+import com.adamg.hnreader.views.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_web_view.*
 
 
@@ -23,13 +22,9 @@ import kotlinx.android.synthetic.main.fragment_web_view.*
  */
 class WebViewFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener{
 
-    @State
-    lateinit var itemUrl: String
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
-        itemUrl = arguments.getString(AppConstants.ITEM_URL)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -46,7 +41,7 @@ class WebViewFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener{
     }
 
     private fun configureWebView() {
-        webView.setWebViewClient(object : WebViewClient() {
+        webView.webViewClient = object : WebViewClient() {
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
                 swipeLayout?.isRefreshing = true
@@ -59,10 +54,10 @@ class WebViewFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener{
                     webView?.zoomIn()
                 }
             }
-        })
+        }
 
-        webView.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-            if (event.action === KeyEvent.ACTION_DOWN &&  keyCode == KeyEvent.KEYCODE_BACK) {
+        webView.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN &&  keyCode == KeyEvent.KEYCODE_BACK) {
                 if (webView.canGoBack()) {
                     webView.goBack()
                     return@OnKeyListener true
@@ -82,6 +77,7 @@ class WebViewFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener{
     }
 
     private fun loadWebFormUrl() {
+        val itemUrl = arguments.getString(AppConstants.ITEM_URL)
         if (itemUrl.endsWith(".pdf")) {
             webView.loadUrl("https://docs.google.com/viewer?url=" + itemUrl)
         } else {
@@ -94,7 +90,7 @@ class WebViewFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener{
     }
 
     companion object Factory {
-        fun create(itemUrl: String): WebViewFragment {
+        fun create(itemUrl: String?): WebViewFragment {
             val webViewFragment = WebViewFragment()
             val bundle = Bundle()
             bundle.putString(AppConstants.ITEM_URL, itemUrl)

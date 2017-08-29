@@ -1,9 +1,8 @@
-package com.adamg.hnreader.base
+package com.adamg.hnreader.views.base
 
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.MenuItem
-import com.evernote.android.state.StateSaver
 import com.hannesdorfmann.mosby3.mvp.MvpActivity
 import com.hannesdorfmann.mosby3.mvp.MvpPresenter
 import com.hannesdorfmann.mosby3.mvp.MvpView
@@ -12,15 +11,7 @@ abstract class BaseActivityMvp<V: MvpView, P: MvpPresenter<V>>: MvpActivity<V, P
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
-        StateSaver.restoreInstanceState(this, savedInstanceState)
         injectDependencies()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
-        outState?.let {
-            StateSaver.saveInstanceState(this, it)
-        }
     }
 
     abstract fun injectDependencies()

@@ -1,4 +1,4 @@
-package com.adamg.hnreader.base
+package com.adamg.hnreader.views.base
 
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter
 import com.hannesdorfmann.mosby3.mvp.MvpView

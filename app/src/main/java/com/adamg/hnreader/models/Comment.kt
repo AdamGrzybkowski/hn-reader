@@ -1,11 +1,14 @@
 package com.adamg.hnreader.models
 
-data class Comment(
-        val id: Long,
-        val level: Int,
-        val user: String,
-        val time: Long,
-        val timeAgo: String,
-        val content: String,
-        val comments: List<Comment>
-)
+import io.realm.RealmList
+import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
+
+open class Comment(
+        @PrimaryKey var id: Long = 0,
+        var level: Int = 0,
+        var user: String? = null,
+        var time: Long? = null,
+        var time_ago: String? = null,
+        var content: String = "",
+        var comments: RealmList<Comment> = RealmList()): RealmObject()

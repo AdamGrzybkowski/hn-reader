@@ -28,8 +28,8 @@ class ItemsAdapter(var stories: List<Item>, val itemListener: ItemListener): Rec
             view.storyTitle.text = item.title
             view.storyBy.text = item.user
             view.storyPoints.text = item.points.toString()
-            view.storyTime.text = item.timeAgo
-            view.commentsCount.text = item.commentsCount.toString()
+            view.storyTime.text = item.time_ago
+            view.commentsCount.text = item.comments_count.toString()
             view.setOnClickListener{ itemListener.onItemClicked(item) }
         }
     }

@@ -2,18 +2,20 @@ package com.adamg.hnreader.dagger.module
 
 import com.adamg.hnreader.api.HackerNewsApi
 import com.adamg.hnreader.dagger.scope.PerApplication
+import com.commit451.regalia.moshi.RealmListJsonAdapterFactory
 import com.facebook.stetho.okhttp3.StethoInterceptor
-import com.google.gson.FieldNamingPolicy
-import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
+import com.squareup.moshi.Moshi
+
+
 
 @Module
-class ApplicationModule(val baseUrl: String) {
+class ApplicationModule(private val baseUrl: String) {
 
     @PerApplication
     @Provides
@@ -29,11 +31,11 @@ class ApplicationModule(val baseUrl: String) {
 
     @PerApplication
     @Provides
-    fun provideGsonConverterFactory(): GsonConverterFactory {
-        val gson = GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create()
-        return GsonConverterFactory.create(gson)
+    fun provideMoshiConverterFactory(): MoshiConverterFactory {
+        val moshi = Moshi.Builder()
+                .add(RealmListJsonAdapterFactory())
+                .build()
+        return MoshiConverterFactory.create(moshi)
     }
 
     @PerApplication
@@ -46,7 +48,7 @@ class ApplicationModule(val baseUrl: String) {
 
     @PerApplication
     @Provides
-    fun provideRetrofit(client: OkHttpClient, converterFactory: GsonConverterFactory, adapterFactory: RxJavaCallAdapterFactory): Retrofit{
+    fun provideRetrofit(client: OkHttpClient, converterFactory: MoshiConverterFactory, adapterFactory: RxJavaCallAdapterFactory): Retrofit{
         return Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addCallAdapterFactory(adapterFactory)

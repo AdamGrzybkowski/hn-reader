@@ -26,7 +26,7 @@ class JobsAdapter(var stories: List<Item>, val itemListener: ItemListener): Recy
     inner class JobsViewHolder(val view: View): RecyclerView.ViewHolder(view) {
         fun bindStory(item: Item){
             view.storyTitle.text = item.title
-            view.storyTime.text = item.timeAgo
+            view.storyTime.text = item.time_ago
             view.storyDomain.text = item.domain
             view.setOnClickListener { itemListener.onItemClicked(item) }
         }
