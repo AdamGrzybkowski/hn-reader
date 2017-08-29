@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.adamg.hnreader.HNApp
 import com.adamg.hnreader.R
-import com.adamg.hnreader.adapter.JobsAdapter
+import com.adamg.hnreader.adapter.ItemsAdapter
 import com.adamg.hnreader.dagger.component.DaggerJobsComponent
 import com.adamg.hnreader.dagger.component.JobsComponent
 import com.adamg.hnreader.models.Item
@@ -29,7 +29,7 @@ class JobsFragment : BaseFragmentMvp<ItemsView, JobsPresenter>(), ItemsView,
         SwipeRefreshLayout.OnRefreshListener, ItemListener {
 
     lateinit private var jobsComponent: JobsComponent
-    lateinit private var adapter: JobsAdapter
+    lateinit private var adapter: ItemsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +44,7 @@ class JobsFragment : BaseFragmentMvp<ItemsView, JobsPresenter>(), ItemsView,
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         contentView.setOnRefreshListener(this)
-        adapter = JobsAdapter(listOf(), this)
+        adapter = ItemsAdapter(listOf(), this)
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(context)
         loadData(false)

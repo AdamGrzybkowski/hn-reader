@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="4dp"
+    card_view:cardBackgroundColor="@color/card_background"
+    card_view:cardCornerRadius="0dp"
+    card_view:cardElevation="3dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:background="?attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/itemTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            card_view:layout_constraintStart_toStartOf="parent"
+            tools:text="GoCardless (YC S11) Is Hiring Software Engineers/SREs/Data Scientists/PMs(London)"
+            android:layout_marginTop="8dp"
+            card_view:layout_constraintTop_toBottomOf="@+id/itemCommentsCount"
+            android:layout_marginRight="8dp"
+            card_view:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="8dp"
+            card_view:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:id="@+id/itemTimeAgo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textSize="12sp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            tools:text="5 hours ago"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            card_view:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/itemUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textSize="12sp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toStartOf="@+id/itemTimeAgo"
+            tools:text="Adam Grzybkowski&#160;•&#160;"
+            tools:layout_editor_absoluteX="187dp"
+            android:layout_marginTop="8dp"
+            card_view:layout_constraintTop_toBottomOf="@+id/itemTitle"/>
+
+        <TextView
+            android:id="@+id/itemDomain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textSize="12sp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintStart_toStartOf="parent"
+            tools:text="google.com"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            card_view:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:id="@+id/itemPointsCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            card_view:layout_constraintLeft_toLeftOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            tools:text="46 points&#160;•&#160;"/>
+
+        <TextView
+            android:id="@+id/itemCommentsCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            card_view:layout_constraintLeft_toRightOf="@+id/itemPointsCount"
+            card_view:layout_constraintTop_toTopOf="parent"
+            tools:text="101 comments"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>
