@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import com.adamg.hnreader.R
 import com.adamg.hnreader.models.Item
 import com.adamg.hnreader.models.ItemType
+import com.adamg.hnreader.utils.hide
+import com.adamg.hnreader.utils.show
 import com.adamg.hnreader.views.listfragments.ItemListener
 import kotlinx.android.synthetic.main.item_card.view.*
 
@@ -33,13 +35,13 @@ class ItemsAdapter(var stories: List<Item>, val itemListener: ItemListener): Rec
             view.itemPointsCount.text = points?.let { view.context.resources.getQuantityString(R.plurals.points, it, points) }
             view.itemTimeAgo.text = item.time_ago
             view.itemCommentsCount.text = view.context.resources.getQuantityString(R.plurals.comments, item.comments_count, item.comments_count)
-            view.itemDomain.text = item.domain
+            if (item.domain != null) view.itemDomain.text = item.domain else view.itemDomain.text = ""
             if (item.type == ItemType.JOB.value) {
-                view.itemPointsCount.visibility = View.GONE
-                view.itemCommentsCount.visibility = View.GONE
+                view.itemPointsCount.hide()
+                view.itemCommentsCount.hide()
             } else {
-                view.itemPointsCount.visibility = View.VISIBLE
-                view.itemCommentsCount.visibility = View.VISIBLE
+                view.itemPointsCount.show()
+                view.itemCommentsCount.show()
             }
             view.setOnClickListener{ itemListener.onItemClicked(item) }
         }
