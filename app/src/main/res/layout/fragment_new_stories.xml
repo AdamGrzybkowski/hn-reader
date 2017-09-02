@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.listfragments.newstories.NewStoriesFragment">
+    tools:context=".views.fragments.listfragments.newstories.NewStoriesFragment">
 
     <ProgressBar
         android:id="@+id/loadingView"

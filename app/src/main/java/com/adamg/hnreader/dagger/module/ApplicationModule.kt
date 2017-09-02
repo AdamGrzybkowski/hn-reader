@@ -1,6 +1,6 @@
 package com.adamg.hnreader.dagger.module
 
-import com.adamg.hnreader.api.HackerNewsApi
+import com.adamg.hnreader.networking.HackerNewsApi
 import com.adamg.hnreader.dagger.scope.PerApplication
 import com.commit451.regalia.moshi.RealmListJsonAdapterFactory
 import com.facebook.stetho.okhttp3.StethoInterceptor

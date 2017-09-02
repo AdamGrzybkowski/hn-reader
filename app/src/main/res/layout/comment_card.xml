@@ -46,7 +46,7 @@
                         tools:text="5 hours ago" />
                 </RelativeLayout>
 
-                <com.adamg.hnreader.customviews.HtmlTextView
+                <com.adamg.hnreader.views.customviews.HtmlTextView
                     android:id="@+id/commentContent"
                     android:textColorLink="@color/clickableLinkColor"
                     android:layout_width="match_parent"

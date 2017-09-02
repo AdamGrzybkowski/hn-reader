@@ -1,6 +1,6 @@
 package com.adamg.hnreader.data.repository
 
-import com.adamg.hnreader.api.HackerNewsApi
+import com.adamg.hnreader.networking.HackerNewsApi
 import com.adamg.hnreader.data.dao.ItemDao
 import com.adamg.hnreader.models.Item
 import rx.Observable

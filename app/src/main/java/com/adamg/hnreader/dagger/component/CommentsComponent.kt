@@ -2,7 +2,7 @@ package com.adamg.hnreader.dagger.component
 
 import com.adamg.hnreader.dagger.module.CommentsModule
 import com.adamg.hnreader.dagger.scope.PerActivity
-import com.adamg.hnreader.views.comments.CommentsPresenter
+import com.adamg.hnreader.views.fragments.comments.CommentsPresenter
 import dagger.Component
 
 @PerActivity
