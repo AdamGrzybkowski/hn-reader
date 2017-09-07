@@ -14,6 +14,7 @@ import com.adamg.hnreader.views.fragments.listfragments.ItemsAdapter
 import com.adamg.hnreader.dagger.component.AsksComponent
 import com.adamg.hnreader.dagger.component.DaggerAsksComponent
 import com.adamg.hnreader.models.Item
+import com.adamg.hnreader.views.activities.itemdetailactivity.ItemDetailsActivity
 import com.adamg.hnreader.views.base.BaseFragmentMvp
 import com.adamg.hnreader.views.fragments.listfragments.ItemListener
 import com.adamg.hnreader.views.fragments.listfragments.ItemsUiModel
@@ -94,8 +95,7 @@ class AsksFragment : BaseFragmentMvp<ItemsView, AsksPresenter>(), ItemsView,
     }
 
     override fun onItemClicked(item: Item) {
-//        val intent = parseItemTypeForIntent(context, item)
-//        startActivity(intent)
+        ItemDetailsActivity.start(activity, itemId = item.id)
     }
 
     override fun injectDependencies(){

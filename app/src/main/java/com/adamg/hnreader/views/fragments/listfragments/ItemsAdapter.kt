@@ -30,7 +30,7 @@ class ItemsAdapter(var stories: List<Item>, val itemListener: ItemListener): Rec
             view.itemTitle.text = item.title
             item.user?.let { view.itemUser.text = view.context.getString(R.string.value_dot_separator, it) }
             val points = item.points
-            view.itemPointsCount.text = points?.let { view.context.resources.getQuantityString(R.plurals.points, it, points) }
+            view.itemPointsCount.text = points?.let { getPointString(it) }
             view.itemTimeAgo.text = item.time_ago
             view.itemCommentsCount.text = view.context.resources.getQuantityString(R.plurals.comments, item.comments_count, item.comments_count)
             if (item.domain != null) view.itemDomain.text = item.domain else view.itemDomain.text = ""
@@ -43,5 +43,8 @@ class ItemsAdapter(var stories: List<Item>, val itemListener: ItemListener): Rec
             }
             view.setOnClickListener{ itemListener.onItemClicked(item) }
         }
+
+        private fun getPointString(points: Int) =
+                view.context.resources.getQuantityString(R.plurals.points, points, points) + view.context.getString(R.string.dot_separator)
     }
 }

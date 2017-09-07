@@ -1,5 +1,6 @@
 package com.adamg.hnreader.views.fragments.listfragments.newstories
 
+import com.adamg.hnreader.data.repository.ItemRepository
 import com.adamg.hnreader.networking.HackerNewsApi
 import com.adamg.hnreader.views.base.BasePresenter
 import com.adamg.hnreader.views.fragments.listfragments.ItemsUiModel
@@ -9,12 +10,10 @@ import rx.lang.kotlin.subscribeBy
 import rx.schedulers.Schedulers
 import javax.inject.Inject
 
-class AsksPresenter @Inject constructor(private val hackerNewsApi: HackerNewsApi) : BasePresenter<ItemsView>() {
+class AsksPresenter @Inject constructor(private val itemRepository: ItemRepository): BasePresenter<ItemsView>() {
 
     fun loadNewSAsks(pullToRefresh: Boolean){
-        val subscription = hackerNewsApi.getAsks(1)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+        val subscription = itemRepository.getAsks(1)
                 .map { ItemsUiModel.success(it) }
                 .onErrorReturn { ItemsUiModel.error(it.message) }
                 .startWith(ItemsUiModel.loading())

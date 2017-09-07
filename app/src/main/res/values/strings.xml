@@ -13,6 +13,7 @@
     <string name="save_content_description">save</string>
     <string name="points">points</string>
     <string name="value_dot_separator">%s&#160;•&#160;</string>
+    <string name="dot_separator">&#160;•&#160;</string>
 
     <plurals name="comments">
         <item quantity="one">%d comment</item>
@@ -20,8 +21,8 @@
     </plurals>
 
     <plurals name="points">
-        <item quantity="one">%d point&#160;•&#160;</item>
-        <item quantity="other">%d points&#160;•&#160;</item>
+        <item quantity="one">%d point</item>
+        <item quantity="other">%d points</item>
     </plurals>
 
 </resources>
