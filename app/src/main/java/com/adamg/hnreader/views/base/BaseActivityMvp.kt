@@ -9,15 +9,16 @@ import com.hannesdorfmann.mosby3.mvp.MvpView
 
 abstract class BaseActivityMvp<V: MvpView, P: MvpPresenter<V>>: MvpActivity<V, P>() {
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         injectDependencies()
+        super.onCreate(savedInstanceState)
     }
 
     abstract fun injectDependencies()
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.getItemId()) {
+        when (item.itemId) {
             android.R.id.home -> {
                 super.onBackPressed()
                 return true

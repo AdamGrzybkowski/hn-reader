@@ -5,7 +5,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.adamg.hnreader.views.mainactivity.MainActivity">
+    tools:context=".views.activities.mainactivity.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
